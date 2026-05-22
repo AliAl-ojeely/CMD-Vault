@@ -1,19 +1,22 @@
+<div align="center">
+
 # CMD Vault
 
-**Cross‑platform, offline command reference hub – built with Electron.js**  
+[![Electron](https://img.shields.io/badge/Framework-Electron-blue?logo=electron&style=for-the-badge)](https://www.electronjs.org/)
+[![Version](https://img.shields.io/badge/Version-1.0.0-red?style=for-the-badge)](https://github.com/AliAl-ojeely)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![Windows](https://img.shields.io/badge/Platform-Windows-blue?logo=windows&style=for-the-badge)](https://github.com/AliAl-ojeely)
+[![Linux](https://img.shields.io/badge/Platform-Linux-yellow?logo=linux&style=for-the-badge)](https://github.com/AliAl-ojeely)
 
-<div align="center">
-  <img src="assets/icon.png" alt="CMD Vault Logo" width="120" />
 </div>
 
-<p align="center">
-  <strong>English</strong> |
-  <a href="#%D9%88%D8%B5%D9%81-%D8%A7%D9%84%D9%85%D8%B4%D8%B1%D9%88%D8%B9">العربية</a>
-</p>
-
----
-
 ## What is CMD Vault?
+
+<div align="center">
+<img src="assets/1.png" alt="CMD Vault Main Interface" width="750" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+</div>
+
+<br>
 
 CMD Vault is a **fully offline, bilingual** command reference application for **Windows**, **Linux**, and **macOS**. It provides a categorized, instantly searchable library of essential terminal commands, each accompanied by a detailed explanation in **English and Arabic**.  
 
@@ -38,6 +41,12 @@ Built with Electron.js, the app requires no internet connection, respects your p
 - **Portable & Lightweight** – No heavy database engine; all command data lives in simple JavaScript files.  
 - **Cross‑Platform Builds** – Pre‑built installers for Windows, macOS, and Linux are available.  
 
+<br>
+<div align="center">
+<img src="assets/2.png" alt="CMD Vault Windows Commands" width="750" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+</div>
+<br>
+
 ---
 
 ## Installation
@@ -59,18 +68,29 @@ npm install
 npm start
 ```
 
+<br>
+<div align="center">
+<img src="assets/3.png" alt="Settings Main Interface" width="750" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+</div>
+<br>
+
 Requirements: Node.js 22+ and npm.
 
 Build from source
 To create distributable installers locally:
 
-Bash
+```bash
 npm run dist          # Build for the current OS
 npm run dist-win      # Windows only
 npm run dist-linux    # Linux only
 The outputs will appear in the dist/ folder.
+```
 
-Project Structure
+---
+
+## Project Structure
+
+```bahs
 CMD-Vault/
 ├── .github/
 │   └── workflows/
@@ -112,8 +132,12 @@ CMD-Vault/
 ├── package.json                 # Dependencies, scripts, build configuration
 ├── README.md                    # This file
 └── .gitignore
+```
 
-Usage
+---
+
+## Usage
+
 Launch the app.
 
 On the landing page, choose your operating system (Windows or Linux).
@@ -126,7 +150,16 @@ Click Copy to copy a command, or Details to read a full description.
 
 Access Settings from the sidebar to change the language or adjust the window size.
 
-Contributing
+<br>
+<div align="center">
+<img src="assets/4.png" alt="Linux Distro Main Interface" width="750" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+</div>
+<br>
+
+---
+
+## Contributing
+
 Contributions are welcome!
 
 You can help by:
@@ -139,40 +172,11 @@ Reporting bugs or suggesting features via Issues.
 
 Please fork the repository and create a pull request with your changes.
 
-License
-This project is licensed under the MIT License – see the LICENSE file for details.
+## Developer & Contact
 
-Credits
-Frontend-End Web Developer – Ali Al‑ojeely (Mr.Ghost)
+**Ali Nasser Al-ojeely (Mr.Ghost)** *Junior Software Developer | Frontend Specialist*
 
-Email – <alialojeely@gmail.com>
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-181717?logo=github)](https://github.com/AliAl-ojeely)
+[![Email](https://img.shields.io/badge/Email-Contact_Me-EA4335?logo=gmail)](mailto:alialojeely@gmail.com)
 
-GitHub – AliAl‑ojeely
-
-Version – 1.0.0
-
-وصف المشروع (Arabic)
-CMD Vault هو تطبيق مرجعي للأوامر الطرفية مخصص لأنظمة ويندوز ولينكس.
-
-يحتوي على مكتبة شاملة من الأوامر المفيدة مع شرح مفصّل باللغتين العربية والإنجليزية.
-
-التطبيق يعمل بشكل كامل دون اتصال بالإنترنت، ولا يقوم بتنفيذ الأوامر – بل يعرضها فقط بغرض النسخ والاستخدام اليدوي.
-
-الميزات
-واجهة مستخدم ثنائية اللغة (عربي / English).
-
-دعم محسّن لأنظمة ويندوز ولينكس (مع اختيار التوزيعة).
-
-بحث سريع وفئات منظمة (الشبكات، إدارة الملفات، معلومات النظام، …).
-
-نسخ الأوامر بنقرة واحدة وقراءة وصف شامل لكل أمر.
-
-إعدادات دائمة (اللغة وحجم النافذة).
-
-تصميم OLED داكن مريح للعين ومناسب لبيئات العمل الليلية.
-
-التحميل
-يمكنك تحميل أحدث إصدار لأنظمة ويندوز ولينكس من صفحة الإصدارات.
-
-المساهمة
-نرحب بمساهماتكم! يمكنكم إضافة أوامر جديدة، تحسين الترجمات، أو الإبلاغ عن المشكلات.
+If you have any suggestions, encounter bugs, or want to contribute, feel free to open an issue or reach out directly!
