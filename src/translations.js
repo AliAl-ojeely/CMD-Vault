@@ -37,9 +37,25 @@ const dictionary = {
         btn_save_settings: "حفظ الإعدادات",
         dev_title: "معلومات المطور",
         back_to_commands: "الأوامر",
-        settings_saved: "تم حفظ الإعدادات بنجاح!"
-
-
+        settings_saved: "تم حفظ الإعدادات بنجاح!",
+        checking_updates: "جارٍ التحقق من التحديثات...",
+        up_to_date: "أنت تستخدم أحدث إصدار",
+        new_version_available: "يتوفر إصدار جديد",
+        update_error: "خطأ",
+        update_failed: "فشل التحقق من التحديثات.",
+        github_profile: "حساب GitHub",
+        close_dev: "إغلاق",
+        version_label: "الإصدار 1.5.0",
+        favorite: "المفضلة",
+        add_to_favorites: "أضف إلى المفضلة",
+        remove_from_favorites: "إزالة من المفضلة",
+        group_system: "النظام",
+        group_network: "الشبكة والإنترنت",
+        group_files: "الملفات والتخزين",
+        group_processes: "العمليات والأداء",
+        group_security: "الأمان والمستخدمون",
+        group_productivity: "الإنتاجية والتخصيص",
+        group_other: "أخرى",
     },
     en: {
         appTitle: "CMD Vault",
@@ -79,7 +95,24 @@ const dictionary = {
         btn_save_settings: "Save Settings",
         dev_title: "Developer Info",
         back_to_commands: "Commands",
-        settings_saved: "Settings saved successfully!"
-
+        settings_saved: "Settings saved successfully!",
+        checking_updates: "Checking for updates...",
+        up_to_date: "You are up to date",
+        new_version_available: "New version available",
+        update_error: "Error",
+        update_failed: "Update check failed.",
+        github_profile: "GitHub Profile",
+        close_dev: "Close",
+        version_label: "version 1.5.0",
+        favorite: "Favorites",
+        add_to_favorites: "Add to favorites",
+        remove_from_favorites: "Remove from favorites",
+        group_system: "System",
+        group_network: "Network & Internet",
+        group_files: "Files & Storage",
+        group_processes: "Processes & Performance",
+        group_security: "Security & Users",
+        group_productivity: "Productivity & Customization",
+        group_other: "Other"
     }
 };

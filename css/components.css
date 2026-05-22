@@ -1,6 +1,6 @@
 #commands-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1rem;
 }
 
@@ -312,6 +312,76 @@
     color: var(--accent);
 }
 
+/* ── Sidebar top buttons ────────────────────────── */
+.sidebar-top-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* ── Sidebar groups ──────────────────────────────── */
+.sidebar-group {
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-group-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-group-header:hover {
+    background: #1a1a1a;
+    color: var(--accent);
+}
+
+.sidebar-group-header i {
+    width: 1.2rem;
+    text-align: center;
+}
+
+.sidebar-group-items {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0.5rem;
+}
+
+/* Collapsed state */
+.sidebar-group.collapsed .sidebar-group-items {
+    display: none;
+}
+
+.sidebar-group.collapsed .sidebar-group-header i.fa-chevron-down {
+    transform: rotate(-90deg);
+}
+
+.sidebar-chevron {
+    margin-left: auto;
+    font-size: 0.7rem;
+    transition: transform 0.2s;
+    color: inherit;
+}
+
+.sidebar-group.collapsed .sidebar-chevron {
+    transform: rotate(-90deg);
+}
+
+.sidebar-separator {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0.4rem 0;
+}
+
 /* Settings Container */
 .settings-container {
     max-width: 700px;
@@ -456,4 +526,100 @@
     max-width: 400px;
     width: 90%;
     color: var(--text-primary);
+}
+
+/* ── Toast Notifications ───────────────────────────── */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    pointer-events: none;
+    /* allow clicks through the container */
+}
+
+.toast {
+    pointer-events: auto;
+    /* enable clicks on the toast itself */
+    background: var(--bg-card);
+    border: 1px solid var(--accent);
+    color: var(--text-primary);
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    min-width: 280px;
+    max-width: 500px;
+    animation: toastSlideIn 0.35s ease-out, toastFadeOut 0.35s ease-in 2.5s forwards;
+    backdrop-filter: blur(8px);
+}
+
+.toast.success {
+    border-left: 4px solid var(--accent);
+}
+
+.toast.error {
+    border-left: 4px solid #ff5555;
+    border-color: #ff5555;
+}
+
+.toast i {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.toast .toast-msg {
+    flex: 1;
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes toastFadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+.btn-favorite {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.2rem 0.4rem;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.btn-favorite:hover {
+    color: #ff4d6d;
+    transform: scale(1.2);
+}
+
+.btn-favorite .fa-solid.fa-heart {
+    color: #ff4d6d;
 }

@@ -1,7 +1,7 @@
 {
   "name": "cmd-vault",
-  "version": "1.0.0",
-  "description": "Cross-platform, bilingual command execution and reference hub",
+  "version": "1.5.0",
+  "description": "Cross-platform, bilingual command reference hub for Windows, Linux, and macOS",
   "author": "Ali Al-ojeely <alialojeely@gmail.com>",
   "main": "src/main.js",
   "productName": "CMD Vault",
@@ -17,6 +17,10 @@
   },
   "build": {
     "appId": "com.alialojeely.cmdvault",
+    "publish": {
+      "provider": "github",
+      "releaseType": "release"
+    },
     "files": [
       "src/**/*",
       "render/**/*",
@@ -50,6 +54,25 @@
             "x64",
             "arm64"
           ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "mac": {
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
         }
       ]
     },
@@ -62,6 +85,9 @@
       "installerIcon": "assets/icon.ico",
       "uninstallerIcon": "assets/icon.ico",
       "runAfterFinish": true
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-Portable.${ext}"
     }
   },
   "dependencies": {

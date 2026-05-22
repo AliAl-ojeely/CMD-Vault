@@ -3,9 +3,8 @@ const path = require('path');
 const { shell } = require('electron');
 const fs = require('fs-extra');
 const { loadCommands } = require('../modules/database');
-const { validateOS } = require('../modules/os-validator');
 const { detectDistro } = require('../modules/distro-detector');
-const { checkGitHubReleases } = require('../modules/updater');   // <-- new
+const { checkGitHubReleases } = require('../modules/updater');
 
 let mainWindow;
 
@@ -23,6 +22,25 @@ function createWindow() {
         },
     });
     mainWindow.loadFile(path.join(__dirname, '..', 'index.html'));
+
+    // ── Auto‑save window size on every resize ──────────────
+    mainWindow.on('resize', () => {
+        const [width, height] = mainWindow.getSize();
+        const settingsPath = getSettingsPath();
+        try {
+            // Read existing settings to preserve language, etc.
+            let current = {};
+            if (fs.existsSync(settingsPath)) {
+                const raw = fs.readFileSync(settingsPath, 'utf-8');
+                current = JSON.parse(raw);
+            }
+            // Merge with new size and defaults
+            const updated = { ...defaultSettings, ...current, windowWidth: width, windowHeight: height };
+            fs.writeFileSync(settingsPath, JSON.stringify(updated, null, 2));
+        } catch (err) {
+            // Silently ignore; the resize still works, just won't save
+        }
+    });
 }
 
 app.whenReady().then(() => {

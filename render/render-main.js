@@ -1,12 +1,17 @@
 // render/render-main.js
-import { setLanguage as uiSetLanguage, renderCategories, renderCommandList, hideModal, showView } from './ui.js';
-import { initSearch, filterByCategory, setupSearchListeners, setSearchLanguage } from './search.js';
-import { updateAllDescriptions, setLanguage as cardSetLanguage } from './command-card.js';
+import { setLanguage as uiSetLanguage, renderCategories, renderCommandList, hideModal, showView, showToast, t } from './ui.js';
+import { initSearch, filterByCategory, setupSearchListeners, setSearchLanguage, setFavorites } from './search.js';
+import { updateAllDescriptions, setLanguage as cardSetLanguage, setToggleFavoriteCallback } from './command-card.js';
 
 let currentLang = 'ar';
 let selectedOS = null;
-let selectedDistro = null;        // for Linux
+let selectedDistro = null;
 let currentSettings = null;
+let currentCategory = 'all';            // track which category is active
+let favorites = JSON.parse(localStorage.getItem('cmdvault-favorites')) || [];
+
+// Provide the toggle function to command-card.js immediately
+setToggleFavoriteCallback(toggleFavorite);
 
 // ── Landing (only inside the landing page) ──
 document.querySelectorAll('#landing-page .os-card').forEach(card => {
@@ -24,7 +29,7 @@ document.querySelectorAll('#landing-page .os-card').forEach(card => {
     });
 });
 
-// ── Linux distro selection (only inside the distro page) ──
+// ── Linux distro selection ──
 document.querySelectorAll('#linux-distro-page .os-card').forEach(card => {
     card.addEventListener('click', () => {
         selectedDistro = card.dataset.distro;
@@ -50,10 +55,12 @@ document.getElementById('back-to-landing')?.addEventListener('click', () => {
     selectedDistro = null;
 });
 
-// ── Settings button ──
-document.getElementById('open-settings-btn')?.addEventListener('click', async () => {
-    showView('settings');
-    await loadSettingsIntoForm();
+// ── Settings button (delegated, works with dynamic button) ──
+document.getElementById('sidebar')?.addEventListener('click', async (e) => {
+    if (e.target.closest('#open-settings-btn')) {
+        showView('settings');
+        await loadSettingsIntoForm();
+    }
 });
 
 // ── Back to commands from settings ──
@@ -79,7 +86,6 @@ async function initApp() {
             return;
         }
 
-        // Filter by OS
         let commands = allCommands.filter(cmd => cmd.platform === 'all' || cmd.platform === selectedOS);
 
         if (commands.length === 0) {
@@ -89,13 +95,16 @@ async function initApp() {
 
         const categories = [...new Set(commands.map(c => c.category))];
 
-        initSearch(commands, currentLang);
-        renderCategories(categories, (cat) => filterByCategory(cat));
+        initSearch(commands, currentLang, favorites);
+        renderCategories(categories, (cat) => {
+            currentCategory = cat;
+            filterByCategory(cat);
+        });
 
         uiSetLanguage(currentLang);
         cardSetLanguage(currentLang);
         updateAllDescriptions(currentLang);
-        renderCommandList(commands);
+        renderCommandList(commands, favorites);        // pass favorites
         setupSearchListeners();
     } catch (error) {
         console.error(error);
@@ -103,7 +112,36 @@ async function initApp() {
     }
 }
 
-// ── Language toggles (sidebar) ──
+// ── Favorites toggle ──────────────────────────────
+function toggleFavorite(rawCommand) {
+    const index = favorites.indexOf(rawCommand);
+    if (index > -1) {
+        favorites.splice(index, 1);
+    } else {
+        favorites.push(rawCommand);
+    }
+    // Save deduplicated
+    localStorage.setItem('cmdvault-favorites', JSON.stringify([...new Set(favorites)]));
+
+    // Update the heart icon on the clicked card
+    const btn = document.querySelector(`.btn-favorite[data-command="${rawCommand}"]`);
+    if (btn) {
+        const isFav = favorites.includes(rawCommand);
+        btn.innerHTML = isFav
+            ? '<i class="fa-solid fa-heart"></i>'
+            : '<i class="fa-regular fa-heart"></i>';
+        btn.title = isFav ? t('remove_from_favorites') : t('add_to_favorites');
+    }
+
+    // If we're currently viewing favorites, re-apply filter
+    if (currentCategory === 'favorites') {
+        setFavorites(favorites);
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) searchInput.dispatchEvent(new Event('input'));
+    }
+}
+
+// ── Language toggles ──
 document.getElementById('lang-en')?.addEventListener('click', () => applyLanguageChange('en'));
 document.getElementById('lang-ar')?.addEventListener('click', () => applyLanguageChange('ar'));
 
@@ -141,16 +179,14 @@ function applySettings(settings) {
 }
 
 async function loadSettingsIntoForm() {
-    const s = await loadSettings();               // saved preferences
+    const s = await loadSettings();
     document.getElementById('langSetting').value = s.lang;
 
-    // Always show the **current** window size (not the saved one)
     if (window.api && window.api.getWindowSize) {
         const size = await window.api.getWindowSize();
         document.getElementById('windowWidthInput').value = size.width;
         document.getElementById('windowHeightInput').value = size.height;
     } else {
-        // fallback to saved values
         document.getElementById('windowWidthInput').value = s.windowWidth || 1200;
         document.getElementById('windowHeightInput').value = s.windowHeight || 800;
     }
@@ -170,31 +206,23 @@ document.getElementById('saveGeneralSettings')?.addEventListener('click', async 
         applyLanguageChange(settings.lang);
     }
 
-    // Show translated save message
-    const msg = document.getElementById('save-message');
-    if (msg) {
-        msg.style.display = 'block';
-        setTimeout(() => { msg.style.display = 'none'; }, 2000);
-    }
+    showToast(t('settings_saved'), 'success');
 });
 
 // ── Update check ──
 document.getElementById('checkForUpdatesBtn')?.addEventListener('click', async () => {
-    const resultEl = document.getElementById('update-result');
-    resultEl.style.display = 'block';
-    resultEl.textContent = 'Checking for updates...';
-
+    showToast(t('checking_updates'), 'info');
     try {
         const result = await window.api.checkUpdate();
         if (result.error) {
-            resultEl.textContent = `Error: ${result.error}`;
+            showToast(`${t('update_error')}: ${result.error}`, 'error');
         } else if (result.hasUpdate) {
-            resultEl.innerHTML = `New version available: <strong>${result.latestVersion}</strong> (current: ${result.currentVersion}). <a href="${result.downloadUrl}" target="_blank">Download</a>`;
+            showToast(`${t('new_version_available')}: ${result.latestVersion}`, 'info');
         } else {
-            resultEl.textContent = `You are up to date (v${result.currentVersion}).`;
+            showToast(`${t('up_to_date')} (v${result.currentVersion})`, 'success');
         }
     } catch (err) {
-        resultEl.textContent = 'Update check failed.';
+        showToast(t('update_failed'), 'error');
     }
 });
 
@@ -203,7 +231,6 @@ window.addEventListener('load', async () => {
     const saved = await loadSettings();
     applySettings(saved);
 
-    // Always synchronize the UI language with the saved (or default) language
     currentLang = saved.lang || currentLang;
     uiSetLanguage(currentLang);
     cardSetLanguage(currentLang);

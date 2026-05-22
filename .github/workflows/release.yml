@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write      # <-- this is what gives the automatic token write access
+  contents: write
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
       - name: Build and Publish for Windows
         if: matrix.os == 'windows-latest'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}    # automatic, no setup needed
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx electron-builder --win --x64 --arm64 --publish always
 
       - name: Build and Publish for Linux
@@ -36,7 +36,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx electron-builder --linux --x64 --arm64 --publish always
-
       - name: Build and Publish for macOS
         if: matrix.os == 'macos-latest'
         env:

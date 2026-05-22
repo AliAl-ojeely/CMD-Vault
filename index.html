@@ -65,53 +65,52 @@
 
     <!-- ========== MAIN APP (hidden initially) ========== -->
     <div id="app-main" style="display: none;">
-
+    
         <!-- Unified Sidebar -->
         <aside id="sidebar">
             <div id="sidebar-header" class="clickable-dev-trigger">
                 <img src="assets/icon.png" alt="CMD Vault Logo" class="sidebar-logo animate-logo" />
                 <h2 id="app-title" class="animate-title">CMD Vault</h2>
             </div>
-
+        
             <div id="sidebar-controls">
                 <button id="back-to-landing" class="back-btn">
-                    <i class="fas fa-arrow-left"></i> <span class="back-label">Change OS</span>
+                    <i class="fas fa-arrow-left"></i> <span class="back-label" data-i18n="changeOS">Change OS</span>
                 </button>
                 <div id="lang-switch">
                     <!-- Language toggles can be re‑enabled later if desired -->
                 </div>
             </div>
-
+        
             <div id="search-box">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" id="search-input" placeholder="Search commands..." />
+                <input type="text" id="search-input" placeholder="Search commands..."
+                    data-i18n-placeholder="searchPlaceholder" />
             </div>
 
+                <button id="settings-back-btn" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;
+                               background: var(--bg-card); border: 1px solid var(--border-color);
+                               color: var(--text-secondary); padding: 0.4rem 1rem; border-radius: 4px;
+                               cursor: pointer;">
+                    <i class="fas fa-arrow-left"></i> <span data-i18n="back_to_commands">Commands</span>
+                </button>
+        
             <nav id="categories-list"></nav>
-
-            <!-- Settings link at bottom of sidebar -->
-            <button id="open-settings-btn" class="sidebar-settings-btn">
-                <i class="fa-solid fa-sliders"></i> <span id="settings-label">Settings</span>
-            </button>
-            <br>
-            <button id="settings-back-btn" class="hidden-btn"
-                style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 0.4rem 1rem; border-radius: 4px; cursor: pointer; margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;">
-                <i class="fas fa-arrow-left"></i> <span data-i18n="back_to_commands">Commands</span>
-            </button>
+            <!-- Settings button is now generated dynamically here -->
         </aside>
-
+    
         <!-- Main Content Area -->
         <section id="content">
             <!-- Commands view -->
             <div id="commands-view">
                 <div id="commands-container"></div>
             </div>
-
+    
             <!-- Settings view (hidden by default) -->
             <div id="settings-view" style="display: none;">
                 <div class="settings-container">
                     <h2><i class="fa-solid fa-sliders"></i> <span data-i18n="title_settings">Settings</span></h2>
-
+    
                     <div class="form-group">
                         <label data-i18n="set_lang">Language:</label>
                         <select id="langSetting" class="custom-select">
@@ -119,7 +118,7 @@
                             <option value="en">English</option>
                         </select>
                     </div>
-
+    
                     <!-- Window Size Settings -->
                     <div class="form-group">
                         <label data-i18n="window_size_title">Window Size (Manual)</label>
@@ -136,7 +135,7 @@
                             </div>
                         </div>
                     </div>
-
+    
                     <!-- Update Check -->
                     <div class="form-group">
                         <label data-i18n="check_updates_title">Application Updates</label>
@@ -144,16 +143,9 @@
                             <i class="fa-solid fa-arrows-rotate"></i>
                             <span data-i18n="btn_check_updates">Check for Updates</span>
                         </button>
-                        <p id="update-result" style="color: var(--text-secondary); margin-top: 0.5rem; display: none;">
-                        </p>
+                        <p id="update-result" style="color: var(--text-secondary); margin-top: 0.5rem; display: none;"></p>
                     </div>
-
-                    <!-- Save message -->
-                    <div id="save-message"
-                        style="display:none; color: var(--accent); text-align: center; margin-bottom: 1rem; font-weight:600;">
-                        <span data-i18n="settings_saved">Settings saved successfully!</span>
-                    </div>
-
+    
                     <button class="save-settings-btn" id="saveGeneralSettings">
                         <i class="fa-solid fa-floppy-disk"></i>
                         <span data-i18n="btn_save_settings">Save Settings</span>
@@ -161,16 +153,16 @@
                 </div>
             </div>
         </section>
-
+    
         <!-- Warning/Info Modal Overlay -->
         <div id="modal-overlay" class="hidden">
             <div class="modal">
-                <h2 id="modal-title">OS Warning</h2>
+                <h2 id="modal-title" data-i18n="warningTitle">OS Warning</h2>
                 <p id="modal-message"></p>
-                <button id="modal-close">Close</button>
+                <button id="modal-close" data-i18n="close">Close</button>
             </div>
         </div>
-
+    
         <!-- Dev Modal Overlay -->
         <div class="modal-overlay" id="devModal" style="display: none;">
             <div class="modal-content"
@@ -184,11 +176,11 @@
                     <p style="color: var(--text-muted); margin: 5px 0; text-align: center;">alialojeely@gmail.com</p>
                     <p style="text-align: center;">
                         <span id="github-profile-link"
-                            style="color: var(--accent); text-decoration: underline; font-weight: bold; cursor: pointer;">GitHub Profile</span>
+                            style="color: var(--accent); text-decoration: underline; font-weight: bold; cursor: pointer;"
+                            data-i18n="github_profile">GitHub Profile</span>
                     </p>
-                    <p style="text-align: center;">version 1.0.0</p>
+                    <p style="text-align: center;" data-i18n="version_label">version 1.5.0</p>
                 </div>
-                <button class="btn-copy" id="closeDevModal" style="margin-top:10px;">Close</button>
             </div>
         </div>
     </div>
