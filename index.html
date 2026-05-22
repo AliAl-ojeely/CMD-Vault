@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CMD Vault</title>
+
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https: local-resource:;">
+
+    <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+    <!-- ========== LANDING PAGE ========== -->
+    <div id="landing-page">
+        <div class="landing-content">
+            <img src="assets/icon.png" alt="CMD Vault Logo" class="landing-logo" />
+            <h1 class="landing-title">CMD Vault</h1>
+            <p class="landing-subtitle">Select your operating system to browse its commands</p>
+            <p class="landing-subtitle-ar">اختر نظام التشغيل لتصفح أوامره</p>
+            <div class="os-selection">
+                <button class="os-card" data-os="windows">
+                    <i class="fab fa-windows fa-4x"></i>
+                    <span>Windows</span>
+                </button>
+                <button class="os-card" data-os="linux">
+                    <i class="fab fa-linux fa-4x"></i>
+                    <span>Linux</span>
+                </button>
+                <button class="os-card" data-os="macos">
+                    <i class="fab fa-apple fa-4x"></i>
+                    <span>macOS</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== LINUX DISTRO SELECTION (hidden initially) ========== -->
+    <div id="linux-distro-page"
+        style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%); z-index: 8000; align-items: center; justify-content: center;">
+        <div class="landing-content">
+            <h2 style="color: var(--accent); margin-bottom: 2rem;">Select your Linux Distribution</h2>
+            <div class="os-selection">
+                <button class="os-card" data-distro="debian">
+                    <i class="fab fa-ubuntu fa-4x"></i>
+                    <span>Debian / Ubuntu</span>
+                </button>
+                <button class="os-card" data-distro="redhat">
+                    <i class="fab fa-redhat fa-4x"></i>
+                    <span>Red Hat / Fedora</span>
+                </button>
+                <button class="os-card" data-distro="arch">
+                    <i class="fab fa-linux fa-4x"></i>
+                    <span>Arch / Manjaro</span>
+                </button>
+            </div>
+            <button id="back-from-distro" class="back-btn" style="margin-top: 2rem;">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+        </div>
+    </div>
+
+    <!-- ========== MAIN APP (hidden initially) ========== -->
+    <div id="app-main" style="display: none;">
+
+        <!-- Unified Sidebar -->
+        <aside id="sidebar">
+            <div id="sidebar-header" class="clickable-dev-trigger">
+                <img src="assets/icon.png" alt="CMD Vault Logo" class="sidebar-logo animate-logo" />
+                <h2 id="app-title" class="animate-title">CMD Vault</h2>
+            </div>
+
+            <div id="sidebar-controls">
+                <button id="back-to-landing" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> <span class="back-label">Change OS</span>
+                </button>
+                <div id="lang-switch">
+                    <!-- Language toggles can be re‑enabled later if desired -->
+                </div>
+            </div>
+
+            <div id="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="search-input" placeholder="Search commands..." />
+            </div>
+
+            <nav id="categories-list"></nav>
+
+            <!-- Settings link at bottom of sidebar -->
+            <button id="open-settings-btn" class="sidebar-settings-btn">
+                <i class="fa-solid fa-sliders"></i> <span id="settings-label">Settings</span>
+            </button>
+            <br>
+            <button id="settings-back-btn" class="hidden-btn"
+                style="background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 0.4rem 1rem; border-radius: 4px; cursor: pointer; margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-arrow-left"></i> <span data-i18n="back_to_commands">Commands</span>
+            </button>
+        </aside>
+
+        <!-- Main Content Area -->
+        <section id="content">
+            <!-- Commands view -->
+            <div id="commands-view">
+                <div id="commands-container"></div>
+            </div>
+
+            <!-- Settings view (hidden by default) -->
+            <div id="settings-view" style="display: none;">
+                <div class="settings-container">
+                    <h2><i class="fa-solid fa-sliders"></i> <span data-i18n="title_settings">Settings</span></h2>
+
+                    <div class="form-group">
+                        <label data-i18n="set_lang">Language:</label>
+                        <select id="langSetting" class="custom-select">
+                            <option value="ar">العربية</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+
+                    <!-- Window Size Settings -->
+                    <div class="form-group">
+                        <label data-i18n="window_size_title">Window Size (Manual)</label>
+                        <div class="settings-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label data-i18n="window_width">Width (px):</label>
+                                <input type="number" id="windowWidthInput" class="custom-input" min="800" step="10"
+                                    value="1200">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label data-i18n="window_height">Height (px):</label>
+                                <input type="number" id="windowHeightInput" class="custom-input" min="600" step="10"
+                                    value="800">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Update Check -->
+                    <div class="form-group">
+                        <label data-i18n="check_updates_title">Application Updates</label>
+                        <button id="checkForUpdatesBtn" class="folder-btn-blue">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                            <span data-i18n="btn_check_updates">Check for Updates</span>
+                        </button>
+                        <p id="update-result" style="color: var(--text-secondary); margin-top: 0.5rem; display: none;">
+                        </p>
+                    </div>
+
+                    <!-- Save message -->
+                    <div id="save-message"
+                        style="display:none; color: var(--accent); text-align: center; margin-bottom: 1rem; font-weight:600;">
+                        <span data-i18n="settings_saved">Settings saved successfully!</span>
+                    </div>
+
+                    <button class="save-settings-btn" id="saveGeneralSettings">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span data-i18n="btn_save_settings">Save Settings</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Warning/Info Modal Overlay -->
+        <div id="modal-overlay" class="hidden">
+            <div class="modal">
+                <h2 id="modal-title">OS Warning</h2>
+                <p id="modal-message"></p>
+                <button id="modal-close">Close</button>
+            </div>
+        </div>
+
+        <!-- Dev Modal Overlay -->
+        <div class="modal-overlay" id="devModal" style="display: none;">
+            <div class="modal-content"
+                style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+                <i class="fa-solid fa-ghost" style="font-size: 60px; color: var(--accent); margin-bottom: 20px;"></i>
+                <h2 data-i18n="dev_title">Developer Info</h2>
+                <div
+                    style="margin: 25px 0; line-height: 1.8; width: 100%; display: flex; flex-direction: column; align-items: center;">
+                    <h3 style="margin: 0; color: var(--text-main); text-align: center; width: 100%;">Ali Al-ojeely
+                        (Mr.Ghost)</h3>
+                    <p style="color: var(--text-muted); margin: 5px 0; text-align: center;">alialojeely@gmail.com</p>
+                    <p style="text-align: center;">
+                        <span id="github-profile-link"
+                            style="color: var(--accent); text-decoration: underline; font-weight: bold; cursor: pointer;">GitHub Profile</span>
+                    </p>
+                    <p style="text-align: center;">version 1.0.0</p>
+                </div>
+                <button class="btn-copy" id="closeDevModal" style="margin-top:10px;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="src/translations.js"></script>
+    <script type="module" src="render/render-main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+/* =========================================
+   1. Imports (MUST BE AT THE VERY TOP)
+========================================= */
+@import url('variables.css');
+@import url('layout.css');
+@import url('components.css');
+@import url('terminal-ui.css');
+@import url('modals.css');
+
+/* =========================================
+   Custom Scrollbar
+========================================= */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-sidebar);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+/* =========================================
+   Text Selection Color
+========================================= */
+::selection {
+    background: var(--accent);
+    color: #ffffff;
+}
+
+/* =========================================
+   2. Local Fonts (Offline Support)
+========================================= */
+@font-face {
+    font-family: 'Cairo';
+    src: url('../assets/fonts/Cairo-Regular.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Cairo';
+    src: url('../assets/fonts/Cairo-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../assets/fonts/Poppins-Regular.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../assets/fonts/Poppins-Bold.ttf') format('truetype');
+    font-weight: 700;
+}

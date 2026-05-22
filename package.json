@@ -1,0 +1,70 @@
+{
+  "name": "cmd-vault",
+  "version": "1.0.0",
+  "description": "Cross-platform, bilingual command execution and reference hub",
+  "author": "Ali Al-ojeely <alialojeely@gmail.com>",
+  "main": "src/main.js",
+  "productName": "CMD Vault",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "dist-win": "electron-builder --win",
+    "dist-linux": "electron-builder --linux"
+  },
+  "devDependencies": {
+    "electron": "^41.0.2",
+    "electron-builder": "^26.8.1"
+  },
+  "build": {
+    "appId": "com.alialojeely.cmdvault",
+    "files": [
+      "src/**/*",
+      "render/**/*",
+      "css/**/*",
+      "modules/**/*",
+      "data/**/*",
+      "assets/**/*",
+      "index.html",
+      "package.json",
+      "node_modules/**/*"
+    ],
+    "linux": {
+      "icon": "assets/icon.png",
+      "category": "Development",
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "win": {
+      "icon": "assets/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "runAfterFinish": true
+    }
+  },
+  "dependencies": {
+    "fs-extra": "^11.3.5"
+  }
+}

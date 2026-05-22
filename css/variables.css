@@ -1,0 +1,16 @@
+:root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #121212;
+    --bg-sidebar: #0d0d0d;
+    --bg-card: #1a1a1a;
+    --bg-input: #1e1e1e;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --accent: #00ffcc;
+    --accent-hover: #00ccaa;
+    --danger: #ff5555;
+    --border-color: #2a2a2a;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    --font-mono: 'Courier New', 'Consolas', 'Monaco', 'Menlo', monospace;
+    --font-ui: 'Poppins', 'Cairo', sans-serif;
+}
