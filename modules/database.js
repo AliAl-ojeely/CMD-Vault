@@ -2,6 +2,7 @@
 const windowsCommands = require('../data/win-commands');
 const linuxCommands = require('../data/linux-commands');
 const macCommands = require('../data/mac-commands');
+const aiPrompts = require('../data/ai-prompts.js');
 
 // Combine all commands, then remove duplicates by command string + platform
 function deduplicateCommands(commands) {
@@ -21,7 +22,7 @@ const allCommands = deduplicateCommands([
 ]);
 
 async function loadCommands() {
-    return allCommands;
+    return [...windowsCommands, ...linuxCommands, ...macCommands, ...aiPrompts];
 }
 
 module.exports = { loadCommands };

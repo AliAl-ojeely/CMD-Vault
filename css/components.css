@@ -623,3 +623,208 @@
 .btn-favorite .fa-solid.fa-heart {
     color: #ff4d6d;
 }
+
+/* Floating Shortcuts Button */
+.shortcuts-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 2px solid var(--accent);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    z-index: 10000;
+}
+
+.shortcuts-fab:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 255, 204, 0.3);
+}
+
+.shortcuts-fab img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+/* Shortcuts Modal */
+.shortcuts-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20000;
+}
+
+.shortcuts-modal .shortcuts-modal-container {
+    background: var(--bg-card);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 720px;
+    max-height: 85vh;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.shortcuts-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    background: linear-gradient(135deg, rgba(0, 255, 204, 0.08) 0%, rgba(0, 0, 0, 0) 100%);
+    border-radius: 24px 24px 0 0;
+}
+
+.shortcuts-header i {
+    font-size: 1.6rem;
+    color: var(--accent);
+}
+
+.shortcuts-header h2 {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+}
+
+.shortcuts-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.4rem;
+    border-radius: 50%;
+    transition: all 0.2s;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shortcuts-close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent);
+}
+
+.shortcuts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 0.8rem;
+    padding: 1.5rem;
+}
+
+.shortcut-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--bg-input);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    transition: all 0.2s;
+    border: 1px solid var(--border-color);
+}
+
+.shortcut-card:hover {
+    border-color: var(--accent);
+    background: rgba(0, 255, 204, 0.05);
+    transform: translateX(4px);
+}
+
+.shortcut-key-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 120px;
+}
+
+.shortcut-icon {
+    font-size: 1.1rem;
+    color: var(--accent);
+    width: 24px;
+    text-align: center;
+}
+
+.shortcut-key-wrapper kbd {
+    background: #1e1e1e;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    font-family: 'Fira Code', monospace;
+    font-weight: bold;
+    color: var(--accent);
+    font-size: 0.85rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.shortcut-desc {
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    line-height: 1.3;
+    flex: 1;
+}
+
+/* RTL adjustments for RTL languages */
+[dir="rtl"] .shortcut-card {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .shortcut-key-wrapper {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .shortcut-card:hover {
+    transform: translateX(-4px);
+}
+
+@media (max-width: 640px) {
+    .shortcuts-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+
+    .shortcut-key-wrapper {
+        min-width: 100px;
+    }
+
+    .shortcut-key-wrapper kbd {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.6rem;
+    }
+
+    .shortcut-desc {
+        font-size: 0.8rem;
+    }
+}

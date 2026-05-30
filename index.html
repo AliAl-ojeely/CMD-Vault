@@ -18,21 +18,25 @@
     <div id="landing-page">
         <div class="landing-content">
             <img src="assets/icon.png" alt="CMD Vault Logo" class="landing-logo" />
-            <h1 class="landing-title">CMD Vault</h1>
-            <p class="landing-subtitle">Select your operating system to browse its commands</p>
-            <p class="landing-subtitle-ar">اختر نظام التشغيل لتصفح أوامره</p>
+            <h1 class="landing-title" data-i18n="appTitle">CMD Vault</h1>
+            <p class="landing-subtitle" data-i18n="landing_subtitle">Select your operating system to browse its commands
+            </p>
             <div class="os-selection">
                 <button class="os-card" data-os="windows">
                     <i class="fab fa-windows fa-4x"></i>
-                    <span>Windows</span>
+                    <span data-i18n="os_windows">Windows</span>
                 </button>
                 <button class="os-card" data-os="linux">
                     <i class="fab fa-linux fa-4x"></i>
-                    <span>Linux</span>
+                    <span data-i18n="os_linux">Linux</span>
                 </button>
                 <button class="os-card" data-os="macos">
                     <i class="fab fa-apple fa-4x"></i>
-                    <span>macOS</span>
+                    <span data-i18n="os_macos">macOS</span>
+                </button>
+                <button class="os-card" data-os="ai">
+                    <i class="fa-solid fa-brain fa-4x"></i>
+                    <span data-i18n="os_ai">AI Prompts</span>
                 </button>
             </div>
         </div>
@@ -42,7 +46,8 @@
     <div id="linux-distro-page"
         style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%); z-index: 8000; align-items: center; justify-content: center;">
         <div class="landing-content">
-            <h2 style="color: var(--accent); margin-bottom: 2rem;">Select your Linux Distribution</h2>
+            <h2 style="color: var(--accent); margin-bottom: 2rem;" data-i18n="select_linux_distro">Select your Linux
+                Distribution</h2>
             <div class="os-selection">
                 <button class="os-card" data-distro="debian">
                     <i class="fab fa-ubuntu fa-4x"></i>
@@ -58,21 +63,21 @@
                 </button>
             </div>
             <button id="back-from-distro" class="back-btn" style="margin-top: 2rem;">
-                <i class="fas fa-arrow-left"></i> Back
+                <i class="fas fa-arrow-left"></i> <span data-i18n="back">Back</span>
             </button>
         </div>
     </div>
 
     <!-- ========== MAIN APP (hidden initially) ========== -->
     <div id="app-main" style="display: none;">
-    
+
         <!-- Unified Sidebar -->
         <aside id="sidebar">
             <div id="sidebar-header" class="clickable-dev-trigger">
                 <img src="assets/icon.png" alt="CMD Vault Logo" class="sidebar-logo animate-logo" />
-                <h2 id="app-title" class="animate-title">CMD Vault</h2>
+                <h2 id="app-title" class="animate-title" data-i18n="appTitle">CMD Vault</h2>
             </div>
-        
+
             <div id="sidebar-controls">
                 <button id="back-to-landing" class="back-btn">
                     <i class="fas fa-arrow-left"></i> <span class="back-label" data-i18n="changeOS">Change OS</span>
@@ -81,36 +86,36 @@
                     <!-- Language toggles can be re‑enabled later if desired -->
                 </div>
             </div>
-        
+
             <div id="search-box">
                 <i class="fas fa-search search-icon"></i>
                 <input type="text" id="search-input" placeholder="Search commands..."
                     data-i18n-placeholder="searchPlaceholder" />
             </div>
 
-                <button id="settings-back-btn" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;
-                               background: var(--bg-card); border: 1px solid var(--border-color);
-                               color: var(--text-secondary); padding: 0.4rem 1rem; border-radius: 4px;
-                               cursor: pointer;">
-                    <i class="fas fa-arrow-left"></i> <span data-i18n="back_to_commands">Commands</span>
-                </button>
-        
+            <button id="settings-back-btn" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;
+                           background: var(--bg-card); border: 1px solid var(--border-color);
+                           color: var(--text-secondary); padding: 0.4rem 1rem; border-radius: 4px;
+                           cursor: pointer;">
+                <i class="fas fa-arrow-left"></i> <span data-i18n="back_to_commands">Commands</span>
+            </button>
+
             <nav id="categories-list"></nav>
             <!-- Settings button is now generated dynamically here -->
         </aside>
-    
+
         <!-- Main Content Area -->
         <section id="content">
             <!-- Commands view -->
             <div id="commands-view">
                 <div id="commands-container"></div>
             </div>
-    
+
             <!-- Settings view (hidden by default) -->
             <div id="settings-view" style="display: none;">
                 <div class="settings-container">
                     <h2><i class="fa-solid fa-sliders"></i> <span data-i18n="title_settings">Settings</span></h2>
-    
+
                     <div class="form-group">
                         <label data-i18n="set_lang">Language:</label>
                         <select id="langSetting" class="custom-select">
@@ -118,7 +123,7 @@
                             <option value="en">English</option>
                         </select>
                     </div>
-    
+
                     <!-- Window Size Settings -->
                     <div class="form-group">
                         <label data-i18n="window_size_title">Window Size (Manual)</label>
@@ -135,7 +140,7 @@
                             </div>
                         </div>
                     </div>
-    
+
                     <!-- Update Check -->
                     <div class="form-group">
                         <label data-i18n="check_updates_title">Application Updates</label>
@@ -143,9 +148,10 @@
                             <i class="fa-solid fa-arrows-rotate"></i>
                             <span data-i18n="btn_check_updates">Check for Updates</span>
                         </button>
-                        <p id="update-result" style="color: var(--text-secondary); margin-top: 0.5rem; display: none;"></p>
+                        <p id="update-result" style="color: var(--text-secondary); margin-top: 0.5rem; display: none;">
+                        </p>
                     </div>
-    
+
                     <button class="save-settings-btn" id="saveGeneralSettings">
                         <i class="fa-solid fa-floppy-disk"></i>
                         <span data-i18n="btn_save_settings">Save Settings</span>
@@ -153,7 +159,7 @@
                 </div>
             </div>
         </section>
-    
+
         <!-- Warning/Info Modal Overlay -->
         <div id="modal-overlay" class="hidden">
             <div class="modal">
@@ -162,7 +168,7 @@
                 <button id="modal-close" data-i18n="close">Close</button>
             </div>
         </div>
-    
+
         <!-- Dev Modal Overlay -->
         <div class="modal-overlay" id="devModal" style="display: none;">
             <div class="modal-content"
@@ -179,7 +185,7 @@
                             style="color: var(--accent); text-decoration: underline; font-weight: bold; cursor: pointer;"
                             data-i18n="github_profile">GitHub Profile</span>
                     </p>
-                    <p style="text-align: center;" data-i18n="version_label">version 1.5.0</p>
+                    <p style="text-align: center;" data-i18n="version_label">version 2.0.0</p>
                 </div>
             </div>
         </div>

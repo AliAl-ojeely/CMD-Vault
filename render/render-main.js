@@ -2,12 +2,13 @@
 import { setLanguage as uiSetLanguage, renderCategories, renderCommandList, hideModal, showView, showToast, t } from './ui.js';
 import { initSearch, filterByCategory, setupSearchListeners, setSearchLanguage, setFavorites } from './search.js';
 import { updateAllDescriptions, setLanguage as cardSetLanguage, setToggleFavoriteCallback } from './command-card.js';
+import { initShortcuts } from './shortcuts.js';
 
 let currentLang = 'ar';
 let selectedOS = null;
 let selectedDistro = null;
 let currentSettings = null;
-let currentCategory = 'all';            // track which category is active
+let currentCategory = 'all';
 let favorites = JSON.parse(localStorage.getItem('cmdvault-favorites')) || [];
 
 // Provide the toggle function to command-card.js immediately
@@ -111,6 +112,10 @@ async function initApp() {
         document.getElementById('commands-container').innerHTML = `<div class="error">Failed to load commands.</div>`;
     }
 }
+
+window.addEventListener('load', () => {
+    initShortcuts();
+});
 
 // ── Favorites toggle ──────────────────────────────
 function toggleFavorite(rawCommand) {

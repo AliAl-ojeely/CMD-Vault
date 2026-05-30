@@ -14,7 +14,7 @@ function createWindow() {
         height: 800,
         backgroundColor: '#0a0a0a',
         icon: path.join(__dirname, '..', 'assets', 'icon.png'),
-        autoHideMenuBar: true,
+        autoHideMenuBar: true,          // change to false so menu bar is visible (optional)
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
@@ -23,30 +23,66 @@ function createWindow() {
     });
     mainWindow.loadFile(path.join(__dirname, '..', 'index.html'));
 
-    // ── Auto‑save window size on every resize ──────────────
+    // Auto‑save window size on every resize
     mainWindow.on('resize', () => {
         const [width, height] = mainWindow.getSize();
         const settingsPath = getSettingsPath();
         try {
-            // Read existing settings to preserve language, etc.
             let current = {};
             if (fs.existsSync(settingsPath)) {
                 const raw = fs.readFileSync(settingsPath, 'utf-8');
                 current = JSON.parse(raw);
             }
-            // Merge with new size and defaults
             const updated = { ...defaultSettings, ...current, windowWidth: width, windowHeight: height };
             fs.writeFileSync(settingsPath, JSON.stringify(updated, null, 2));
         } catch (err) {
-            // Silently ignore; the resize still works, just won't save
+            // ignore
         }
     });
 }
 
+// ─── Application Menu (includes reload shortcuts) ──────────
+function createApplicationMenu() {
+    const template = [
+        {
+            label: 'View',
+            submenu: [
+                { role: 'reload' },          // Ctrl+R (or Cmd+R on macOS)
+                { role: 'forceReload' },     // Ctrl+Shift+R (or Cmd+Shift+R)
+                { type: 'separator' },
+                { role: 'toggleDevTools' },  // F12 / Ctrl+Shift+I
+                { type: 'separator' },
+                { role: 'resetZoom' },
+                { role: 'zoomIn' },
+                { role: 'zoomOut' },
+                { type: 'separator' },
+                { role: 'togglefullscreen' }
+            ]
+        },
+        // Optional: add an Edit menu for copy/paste (useful in forms)
+        {
+            label: 'Edit',
+            submenu: [
+                { role: 'undo' },
+                { role: 'redo' },
+                { type: 'separator' },
+                { role: 'cut' },
+                { role: 'copy' },
+                { role: 'paste' },
+                { role: 'selectAll' }
+            ]
+        }
+    ];
+
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
+}
+
 app.whenReady().then(() => {
     createWindow();
-    Menu.setApplicationMenu(null);
+    createApplicationMenu();    // ← replaces Menu.setApplicationMenu(null)
 
+    // Keep your existing DevTools global shortcuts
     globalShortcut.register('F12', () => {
         if (mainWindow) mainWindow.webContents.toggleDevTools();
     });
@@ -55,10 +91,9 @@ app.whenReady().then(() => {
     });
 });
 
+// (The rest of your IPC handlers remain unchanged)
 ipcMain.on('resize-window', (event, width, height) => {
-    if (mainWindow) {
-        mainWindow.setSize(width, height);
-    }
+    if (mainWindow) mainWindow.setSize(width, height);
 });
 
 ipcMain.handle('get-window-size', () => {
@@ -77,7 +112,6 @@ app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
 
-// IPC: get all commands
 ipcMain.handle('get-commands', async () => {
     try {
         return await loadCommands();
@@ -87,7 +121,6 @@ ipcMain.handle('get-commands', async () => {
     }
 });
 
-// ─── Settings persistence ──────────────────────
 function getSettingsPath() {
     return path.join(app.getPath('userData'), 'settings.json');
 }
@@ -124,7 +157,6 @@ ipcMain.handle('save-settings', async (event, newSettings) => {
     }
 });
 
-// ─── Update check ──────────────────────────────
 ipcMain.handle('check-update', async () => {
     try {
         return await checkGitHubReleases();

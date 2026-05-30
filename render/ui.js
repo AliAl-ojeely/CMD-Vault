@@ -1,8 +1,52 @@
 // render/ui.js
 let currentLang = 'ar';
 
+// Category translation mapping
+const categoryTranslationMap = {
+    "System Info": "cat_system_info",
+    "System Configuration": "cat_system_config",
+    "System Maintenance": "cat_system_maintenance",
+    "System Management": "cat_system_management",
+    "System Update": "cat_system_update",
+    "Hardware Info": "cat_hardware_info",
+    "Networking": "cat_networking",
+    "Network Diagnostics": "cat_network_diagnostics",
+    "File Sharing": "cat_file_sharing",
+    "Wireless": "cat_wireless",
+    "File Management": "cat_file_management",
+    "Disk Management": "cat_disk_management",
+    "File Transfer": "cat_file_transfer",
+    "Permissions": "cat_permissions",
+    "Data Recovery": "cat_data_recovery",
+    "Process Management": "cat_process_management",
+    "Performance Monitoring": "cat_performance_monitoring",
+    "Service Management": "cat_service_management",
+    "Task Scheduling": "cat_task_scheduling",
+    "Security": "cat_security",
+    "User Management": "cat_user_management",
+    "Power Management": "cat_power_management",
+    "Backup": "cat_backup",
+    "Productivity": "cat_productivity",
+    "Customization": "cat_customization",
+    "Package Management": "cat_package_management",
+    "Help": "cat_help",
+    "Portraits": "cat_portraits",
+    "Photo Editing": "cat_photo_editing",
+    "Logo Design": "cat_logo_design",
+    "Product Photography": "cat_product_photography",
+    "Advanced Techniques": "cat_advanced_techniques",
+    "Street & Urban": "cat_street_urban",
+    "Cinematic": "cat_cinematic",
+    "Sports & Fitness": "cat_sports_fitness",
+    "Social Media": "cat_social_media",
+    "Cultural": "cat_cultural",
+    "Seasonal": "cat_seasonal",
+    "Manga": "cat_manga"
+};
+
 export function t(key) {
-    return (dictionary[currentLang] && dictionary[currentLang][key]) || key;
+    const dict = window.dictionary || {};
+    return (dict[currentLang] && dict[currentLang][key]) || key;
 }
 
 export function setLanguage(lang) {
@@ -10,40 +54,62 @@ export function setLanguage(lang) {
     document.documentElement.lang = lang === 'ar' ? 'ar' : 'en';
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
 
-    // Automatically update all elements with data-i18n attribute
+    const dict = window.dictionary || {};
+
+    // Update data-i18n elements
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (dictionary[currentLang][key]) {
-            el.textContent = dictionary[currentLang][key];
+        if (dict[currentLang] && dict[currentLang][key]) {
+            el.textContent = dict[currentLang][key];
         }
     });
 
-    // Automatically update placeholder attributes
+    // Update placeholders
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
-        if (dictionary[currentLang][key]) {
-            el.placeholder = dictionary[currentLang][key];
+        if (dict[currentLang] && dict[currentLang][key]) {
+            el.placeholder = dict[currentLang][key];
         }
     });
 
-    // ── Update dynamic sidebar buttons ─────────────────
-    // All Commands (keep icon)
+    // All Commands button
     const allBtn = document.querySelector('.category-all');
     if (allBtn) {
         allBtn.innerHTML = `<i class="fa-solid fa-layer-group"></i> ${t('allCategories')}`;
     }
 
-    // Favorites (keep icon)
+    // Favorites button
     const favBtn = document.querySelector('.category-favorites');
     if (favBtn) {
         favBtn.innerHTML = `<i class="fa-solid fa-heart"></i> ${t('favorite')}`;
     }
 
-    // Collapsible group headers (they use data-i18n-group)
+    // Settings button (fix)
+    const settingsBtn = document.getElementById('open-settings-btn');
+    if (settingsBtn) {
+        const icon = settingsBtn.querySelector('i');
+        const iconClass = icon ? icon.className : 'fa-solid fa-sliders';
+        settingsBtn.innerHTML = `<i class="${iconClass}"></i> ${t('settings')}`;
+    }
+
+    // Collapsible group headers
     document.querySelectorAll('[data-i18n-group]').forEach(span => {
         const key = span.getAttribute('data-i18n-group');
-        if (dictionary[currentLang][key]) {
-            span.textContent = dictionary[currentLang][key];
+        if (dict[currentLang] && dict[currentLang][key]) {
+            span.textContent = dict[currentLang][key];
+        }
+    });
+
+    // Dynamic category buttons
+    document.querySelectorAll('.sidebar-group-items .category-item').forEach(btn => {
+        const originalCat = btn.getAttribute('data-original-cat');
+        if (originalCat) {
+            const transKey = categoryTranslationMap[originalCat];
+            if (transKey && dict[currentLang] && dict[currentLang][transKey]) {
+                btn.textContent = dict[currentLang][transKey];
+            } else {
+                btn.textContent = originalCat;
+            }
         }
     });
 }
@@ -53,7 +119,6 @@ export function showModal(message) {
     document.getElementById('modal-overlay').classList.remove('hidden');
 }
 
-// Show a friendly toast notification
 export function showToast(message, type = 'success') {
     let container = document.getElementById('toast-container');
     if (!container) {
@@ -92,7 +157,14 @@ export function showToast(message, type = 'success') {
 }
 
 export function showInfoModal(title, contentHTML) {
-    document.getElementById('modal-title').textContent = title;
+    const titleEl = document.getElementById('modal-title');
+    if (title && title.trim() !== '') {
+        titleEl.textContent = title;
+        titleEl.style.display = '';
+    } else {
+        // Hide the title element for AI prompts
+        titleEl.style.display = 'none';
+    }
     document.getElementById('modal-message').innerHTML = contentHTML;
     document.getElementById('modal-overlay').classList.remove('hidden');
 }
@@ -105,7 +177,6 @@ export function renderCategories(categories, onCategorySelect) {
     const list = document.getElementById('categories-list');
     list.innerHTML = '';
 
-    // ── Favorites, All Commands, Settings ─────────────
     const topBtns = document.createElement('div');
     topBtns.className = 'sidebar-top-btns';
 
@@ -121,12 +192,10 @@ export function renderCategories(categories, onCategorySelect) {
     allBtn.addEventListener('click', () => onCategorySelect('all'));
     topBtns.appendChild(allBtn);
 
-    // Separator
     const sep = document.createElement('div');
     sep.className = 'sidebar-separator';
     topBtns.appendChild(sep);
 
-    // Settings button (ID used by delegated listener)
     const settingsBtn = document.createElement('button');
     settingsBtn.id = 'open-settings-btn';
     settingsBtn.className = 'category-item';
@@ -135,7 +204,6 @@ export function renderCategories(categories, onCategorySelect) {
 
     list.appendChild(topBtns);
 
-    // ── Group definitions (unchanged) ─────────────────
     const groups = [
         {
             key: 'group_system', icon: 'fa-solid fa-desktop',
@@ -175,7 +243,6 @@ export function renderCategories(categories, onCategorySelect) {
         groups.push({ key: 'group_other', icon: 'fa-solid fa-ellipsis', categories: otherCategories });
     }
 
-    // ── Render groups ─────────────────────────────────
     groups.forEach(group => {
         const groupDiv = document.createElement('div');
         groupDiv.className = 'sidebar-group';
@@ -195,7 +262,9 @@ export function renderCategories(categories, onCategorySelect) {
             if (categories.includes(cat)) {
                 const btn = document.createElement('button');
                 btn.className = 'category-item';
-                btn.textContent = cat;
+                btn.setAttribute('data-original-cat', cat);
+                const transKey = categoryTranslationMap[cat];
+                btn.textContent = transKey ? t(transKey) : cat;
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     onCategorySelect(cat);
