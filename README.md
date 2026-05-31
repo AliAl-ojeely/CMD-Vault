@@ -111,26 +111,27 @@ CMD-Vault/
 ├── data/
 │   ├── win-commands.js          # Windows commands with bilingual descriptions
 │   ├── linux-commands.js        # Linux commands
+│   ├── mac-commands.js          # Mac commands
+│   ├── ai-prompts.js            # AI Prompts with a fully description for each one
 │   └── commands-grouping.js     # Utility: merges the above into commands.json
 ├── modules/
 │   ├── database.js              # Loads commands from the .js files
-│   ├── os-validator.js          # Ensures command platform matches host OS
 │   ├── distro-detector.js       # Detects Linux distribution family
 │   ├── updater.js               # Checks for new GitHub releases
-│   └── dialogs.js               # (placeholder for future dialogs)
 ├── render/
 │   ├── state.js                 # Centralised renderer state
 │   ├── ui.js                    # DOM helpers, language switching, modal logic
 │   ├── search.js                # Search & filter logic
 │   ├── command-card.js          # Creates individual command cards
 │   └── render-main.js           # Main renderer orchestrator
+│   └── shortcuts.js             # Keyboard shortcuts for the main app 
 ├── src/
 │   ├── main.js                  # Electron main process, IPC handlers
 │   ├── preload.js               # Context bridge (secure API exposure)
 │   └── translations.js          # Full Arabic & English dictionary
 ├── index.html                   # Single-page application shell
 ├── package.json                 # Dependencies, scripts, build configuration
-├── README.md                    # This file
+├── README.md                    
 └── .gitignore
 ```
 
