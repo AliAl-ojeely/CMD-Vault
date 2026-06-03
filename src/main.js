@@ -6,6 +6,12 @@ const { loadCommands } = require('../modules/database');
 const { detectDistro } = require('../modules/distro-detector');
 const { checkGitHubReleases } = require('../modules/updater');
 
+process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception:', error);
+    // Optionally show a message box before exiting
+    app.quit();
+});
+
 let mainWindow;
 
 function createWindow() {
@@ -77,6 +83,11 @@ function createApplicationMenu() {
     const menu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(menu);
 }
+
+process.on('uncaughtException', (error) => {
+    console.error('FATAL:', error);
+    app.quit();
+});
 
 app.whenReady().then(() => {
     createWindow();

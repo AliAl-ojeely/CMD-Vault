@@ -2,6 +2,18 @@ const { app } = require('electron');
 const EventEmitter = require('events');
 const packageJson = require('../package.json');
 
+const isOnline = async () => {
+    try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 3000);
+        await fetch('https://api.github.com', { method: 'HEAD', signal: controller.signal });
+        clearTimeout(timeout);
+        return true;
+    } catch {
+        return false;
+    }
+};
+
 // Optional: try to use semver if installed, otherwise fallback
 let semver;
 try {
@@ -40,6 +52,9 @@ class Updater extends EventEmitter {
     }
 
     async getLatestRelease() {
+        if (!(await isOnline())) {
+            return { error: 'No internet connection', offline: true };
+        }
         const now = Date.now();
         if (this.cachedResult && this.lastCheck && (now - this.lastCheck) < this.cacheTtlMs) {
             return this.cachedResult;
