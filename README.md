@@ -13,7 +13,7 @@
 ## What is CMD Vault?
 
 <div align="center">
-<img src="assets/1.png" alt="CMD Vault Main Interface" width="750" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+<img src="assets/1.webp" alt="CMD Vault Main Interface" width="750" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
 </div>
 
 <br>
@@ -43,7 +43,7 @@ Built with Electron.js, the app requires no internet connection, respects your p
 
 <br>
 <div align="center">
-<img src="assets/2.png" alt="CMD Vault Windows Commands" width="750" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+<img src="assets/2.webp" alt="CMD Vault Windows Commands" width="750" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
 </div>
 <br>
 
@@ -70,7 +70,7 @@ npm start
 
 <br>
 <div align="center">
-<img src="assets/3.png" alt="Settings Main Interface" width="750" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+<img src="assets/3.webp" alt="Settings Main Interface" width="750" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
 </div>
 <br>
 
@@ -100,6 +100,10 @@ CMD-Vault/
 │   ├── fontawesome/             # Icons
 │   ├── icon.ico
 │   ├── icon.png
+│   ├── 1.webp
+│   ├── 2.webp
+│   ├── 3.webp
+│   ├── 4.webp
 │   └── icon.icns
 ├── css/
 │   ├── main.css                 # Entry point, imports all other CSS
@@ -153,7 +157,7 @@ Access Settings from the sidebar to change the language or adjust the window siz
 
 <br>
 <div align="center">
-<img src="assets/4.png" alt="Linux Distro Main Interface" width="750" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+<img src="assets/4.webp" alt="Linux Distro Main Interface" width="750" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
 </div>
 <br>
 
