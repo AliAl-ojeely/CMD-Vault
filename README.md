@@ -3,7 +3,7 @@
 # CMD Vault
 
 [![Electron](https://img.shields.io/badge/Framework-Electron-blue?logo=electron&style=for-the-badge)](https://www.electronjs.org/)
-[![Version](https://img.shields.io/badge/Version-2.2.0-red?style=for-the-badge)](https://github.com/AliAl-ojeely)
+[![Version](https://img.shields.io/badge/Version-2.5.0-red?style=for-the-badge)](https://github.com/AliAl-ojeely)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![Windows](https://img.shields.io/badge/Platform-Windows-blue?logo=windows&style=for-the-badge)](https://github.com/AliAl-ojeely)
 [![Linux](https://img.shields.io/badge/Platform-Linux-yellow?logo=linux&style=for-the-badge)](https://github.com/AliAl-ojeely)
@@ -111,21 +111,24 @@ CMD-Vault/
 │   ├── component-layout.css     # Cards, buttons, animations
 │   └── modals.css               # Modals and overlays
 ├── data/
-│   ├── win-commands.js          # Windows commands with bilingual descriptions
+│   ├── win-commands.js          # Windows commands
 │   ├── linux-commands.js        # Linux commands
 │   ├── mac-commands.js          # Mac commands
-│   ├── ai-prompts.js            # AI Prompts with a fully description for each one
+│   ├── ai-prompts.js            # AI Prompts
+│   ├── git-commands.js          # Git commands
+│   ├── flutter-commands.js      # Flutter commands
+│   ├── nodejs-commands.js       # Node.js & NPM commands
 │   └── commands-grouping.js     # Utility: merges the above into commands.json
 ├── modules/
 │   ├── database.js              # Loads commands from the .js files
 │   ├── distro-detector.js       # Detects Linux distribution family
-│   ├── updater.js               # Checks for new GitHub releases
+│   └── updater.js               # Checks for new GitHub releases
 ├── render/
 │   ├── state.js                 # Centralised renderer state
 │   ├── ui.js                    # DOM helpers, language switching, modal logic
 │   ├── search.js                # Search & filter logic
 │   ├── command-card.js          # Creates individual command cards
-│   └── render-main.js           # Main renderer orchestrator
+│   ├── render-main.js           # Main renderer orchestrator
 │   └── shortcuts.js             # Keyboard shortcuts for the main app 
 ├── src/
 │   ├── main.js                  # Electron main process, IPC handlers

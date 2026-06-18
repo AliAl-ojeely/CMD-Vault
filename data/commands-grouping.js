@@ -1,19 +1,22 @@
-// data/commands-grouping.js
 const fs = require('fs');
 const path = require('path');
 
 const windowsCommands = require('./win-commands');
 const linuxCommands = require('./linux-commands');
 const macCommands = require('./mac-commands');
+const gitCommands = require('./git-commands');
+const flutterCommands = require('./flutter-commands');
+const nodejsCommands = require('./nodejs-commands');
 
-// Combine all commands into one array
 const allCommands = [
     ...windowsCommands,
     ...linuxCommands,
-    ...macCommands
+    ...macCommands,
+    ...gitCommands,
+    ...flutterCommands,
+    ...nodejsCommands
 ];
 
-// Write to commands.json
 const outputPath = path.join(__dirname, 'commands.json');
 fs.writeFileSync(outputPath, JSON.stringify(allCommands, null, 2), 'utf-8');
 

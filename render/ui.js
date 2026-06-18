@@ -41,7 +41,23 @@ const categoryTranslationMap = {
     "Social Media": "cat_social_media",
     "Cultural": "cat_cultural",
     "Seasonal": "cat_seasonal",
-    "Manga": "cat_manga"
+    "Manga": "cat_manga",
+    // Add these to categoryTranslationMap
+    "Git Basics": "cat_git_basics",
+    "Git Branching": "cat_git_branching",
+    "Git Remote": "cat_git_remote",
+    "Git Undo": "cat_git_undo",
+    "Git Advanced": "cat_git_advanced",
+    "Flutter Basics": "cat_flutter_basics",
+    "Flutter Run & Build": "cat_flutter_build",
+    "Flutter Packages": "cat_flutter_pub",
+    "Flutter Code & Test": "cat_flutter_test",
+    "Flutter Advanced": "cat_flutter_advanced",
+    "Node.js Basics": "cat_node_basics",
+    "NPM Packages": "cat_npm_packages",
+    "NPM Scripts": "cat_npm_scripts",
+    "Cache & Config": "cat_node_cache",
+    "Advanced & Debugging": "cat_node_advanced",
 };
 
 export function t(key) {
@@ -231,6 +247,18 @@ export function renderCategories(categories, onCategorySelect) {
         {
             key: 'group_productivity', icon: 'fa-solid fa-rocket',
             categories: ['Productivity', 'Customization', 'Package Management', 'Help']
+        },
+        {
+            key: 'group_git', icon: 'fa-brands fa-git-alt',
+            categories: ['Git Basics', 'Git Branching', 'Git Remote', 'Git Undo', 'Git Advanced']
+        },
+        {
+            key: 'group_flutter', icon: 'fa-solid fa-mobile-screen',
+            categories: ['Flutter Basics', 'Flutter Run & Build', 'Flutter Packages', 'Flutter Code & Test', 'Flutter Advanced']
+        },
+        {
+            key: 'group_nodejs', icon: 'fa-brands fa-node-js',
+            categories: ['Node.js Basics', 'NPM Packages', 'NPM Scripts', 'Cache & Config', 'Advanced & Debugging']
         }
     ];
 
