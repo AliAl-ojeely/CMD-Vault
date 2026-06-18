@@ -310,28 +310,27 @@ body {
     font-size: 1.2rem;
 }
 
+/* =========================================
+   Landing Pages (Windows / Linux)
+========================================= */
+
 #landing-page,
 #linux-distro-page {
-    direction: ltr !important;
-}
-
-#landing-page {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at center, var(--bg-card) 0%, var(--bg-primary) 100%);
+    background-color: var(--bg-primary) !important;
+    background-image: radial-gradient(circle at center, var(--bg-card) 0%, var(--bg-primary) 100%) !important;
+    color: var(--text-primary) !important;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 9999;
     padding: 2rem;
     box-sizing: border-box;
-}
-
-#linux-distro-page {
-    padding: 2rem;
+    overflow-y: auto;
 }
 
 .landing-content,
@@ -339,6 +338,7 @@ body {
     text-align: center;
     max-width: 800px;
     width: 100%;
+    margin: auto;
 }
 
 .landing-logo {
