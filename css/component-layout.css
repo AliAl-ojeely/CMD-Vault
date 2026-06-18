@@ -1,25 +1,155 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#app-main {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+#sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 1.2rem 1rem;
+    overflow-y: auto;
+}
+
+#sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.sidebar-logo {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+#app-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 1px;
+}
+
+#sidebar-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+#lang-switch {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: center;
+}
+
+#lang-switch button {
+    flex: 1;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+#lang-switch button:hover,
+#lang-switch button.active {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+#search-box {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+#search-input {
+    width: 100%;
+    padding: 0.7rem 1rem 0.7rem 2.5rem;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border 0.2s;
+}
+
+#search-input:focus {
+    border-color: var(--accent);
+}
+
+#categories-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex: 1;
+}
+
+.category-item {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.category-item:hover,
+.category-item.active {
+    background: var(--bg-card);
+    color: var(--accent);
+}
+
+#content {
+    flex: 1;
+    padding: 1.5rem 2rem;
+    overflow-y: auto;
+    background: var(--bg-primary);
+}
+
 #commands-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1rem;
-}
-
-#landing-page {
-    direction: ltr !important;
-}
-
-#linux-distro-page {
-    direction: ltr !important;
-    padding: 2rem;
-}
-
-#linux-distro-page .landing-content {
-    max-width: 800px;
-    width: 100%;
-}
-
-#linux-distro-page h2 {
-    font-size: clamp(1.5rem, 4vw, 2rem);
 }
 
 .command-card {
@@ -68,7 +198,41 @@
     gap: 0.5rem;
     justify-content: flex-end;
     flex-wrap: wrap;
-    /* ← allow buttons to wrap to next line if needed */
+}
+
+.back-btn,
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.back-btn {
+    background: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.theme-toggle-btn {
+    padding: 0.4rem 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+}
+
+.back-btn:hover,
+.theme-toggle-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
 }
 
 .btn-copy,
@@ -85,16 +249,25 @@
     gap: 0.3rem;
     transition: background 0.2s;
     white-space: nowrap;
-    /* keep icon + text on one line */
 }
 
-.btn-copy {
-    background: #2a2a2a;
-    color: var(--text-primary);
+.btn-copy,
+.btn-details {
+    background: var(--btn-bg);
+    color: var(--btn-text);
 }
 
-.btn-copy:hover {
-    background: #3a3a3a;
+.btn-copy:hover,
+.btn-details:hover {
+    background: var(--btn-hover);
+}
+
+.btn-copy i,
+.btn-copy svg,
+.btn-details i,
+.btn-details svg {
+    color: var(--btn-text);
+    fill: var(--btn-text);
 }
 
 .btn-execute {
@@ -106,13 +279,23 @@
     background: var(--accent-hover);
 }
 
-.btn-details {
-    background: #1e3a5f;
-    color: #bbd9ff;
+.btn-favorite {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.2rem 0.4rem;
+    transition: color 0.2s, transform 0.2s;
 }
 
-.btn-details:hover {
-    background: #2a4f7f;
+.btn-favorite:hover {
+    color: var(--danger);
+    transform: scale(1.2);
+}
+
+.btn-favorite .fa-solid.fa-heart {
+    color: var(--danger);
 }
 
 .hidden-btn {
@@ -127,42 +310,51 @@
     font-size: 1.2rem;
 }
 
-/* ========== LANDING PAGE ========== */
+#landing-page,
+#linux-distro-page {
+    direction: ltr !important;
+}
+
 #landing-page {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+    background: radial-gradient(circle at center, var(--bg-card) 0%, var(--bg-primary) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 9999;
     padding: 2rem;
-    /* breathing space on very small screens */
     box-sizing: border-box;
 }
 
-.landing-content {
+#linux-distro-page {
+    padding: 2rem;
+}
+
+.landing-content,
+#linux-distro-page .landing-content {
     text-align: center;
     max-width: 800px;
-    /* prevents stretching on ultra‑wide screens */
     width: 100%;
 }
 
 .landing-logo {
     width: min(20vw, 120px);
-    /* scales with window, capped at 120px */
     margin-bottom: 1rem;
 }
 
 .landing-title {
     font-size: clamp(2rem, 5vw, 3rem);
-    /* responsive between 2rem and 3rem */
     font-weight: 700;
     color: var(--accent);
     margin-bottom: 0.5rem;
+}
+
+#linux-distro-page h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
 }
 
 .landing-subtitle,
@@ -181,10 +373,8 @@
 .os-selection {
     display: flex;
     gap: clamp(1rem, 3vw, 2rem);
-    /* flexible gap */
     justify-content: center;
     flex-wrap: wrap;
-    /* wrap cards if window is narrow */
 }
 
 .os-card {
@@ -192,7 +382,6 @@
     border: 2px solid var(--border-color);
     border-radius: 16px;
     width: min(160px, 35vw);
-    /* smaller on narrow screens */
     height: min(180px, 40vw);
     display: flex;
     flex-direction: column;
@@ -208,58 +397,17 @@
 .os-card i {
     color: var(--accent);
     font-size: clamp(2rem, 8vw, 4rem);
-    /* icon scales nicely */
 }
 
-/* rest of hover states remain unchanged */
 .os-card:hover {
     border-color: var(--accent);
     transform: translateY(-5px);
     box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
 }
 
-/* Back button */
-.back-btn {
-    background: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    padding: 0.4rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.9rem;
-}
-
-.back-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-}
-
-.btn-details {
-    background: #1e3a5f;
-    color: #bbd9ff;
-    padding: 0.4rem 0.8rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    transition: background 0.2s;
-}
-
-.btn-details:hover {
-    background: #2a4f7f;
-}
-
-/* ========== SIDEBAR ANIMATION ========== */
 .animate-logo {
     transition: transform 0.3s;
 }
-
-/* REMOVED: .animate-logo:hover – animation now triggers on the whole header */
 
 #sidebar-header:hover .animate-logo {
     animation: pulse 1.5s infinite;
@@ -291,7 +439,6 @@
     cursor: pointer;
 }
 
-/* Settings button in sidebar */
 .sidebar-settings-btn {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -312,7 +459,6 @@
     color: var(--accent);
 }
 
-/* ── Sidebar top buttons ────────────────────────── */
 .sidebar-top-btns {
     display: flex;
     flex-direction: column;
@@ -322,7 +468,6 @@
     border-bottom: 1px solid var(--border-color);
 }
 
-/* ── Sidebar groups ──────────────────────────────── */
 .sidebar-group {
     margin-bottom: 0.5rem;
 }
@@ -341,7 +486,7 @@
 }
 
 .sidebar-group-header:hover {
-    background: #1a1a1a;
+    background: var(--bg-card);
     color: var(--accent);
 }
 
@@ -356,7 +501,6 @@
     padding-left: 0.5rem;
 }
 
-/* Collapsed state */
 .sidebar-group.collapsed .sidebar-group-items {
     display: none;
 }
@@ -382,7 +526,6 @@
     margin: 0.4rem 0;
 }
 
-/* Settings Container */
 .settings-container {
     max-width: 700px;
     padding: 1.5rem;
@@ -504,7 +647,6 @@
     transform: translateX(20px);
 }
 
-/* Dev modal */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -528,7 +670,6 @@
     color: var(--text-primary);
 }
 
-/* ── Toast Notifications ───────────────────────────── */
 #toast-container {
     position: fixed;
     top: 20px;
@@ -540,12 +681,10 @@
     align-items: center;
     gap: 10px;
     pointer-events: none;
-    /* allow clicks through the container */
 }
 
 .toast {
     pointer-events: auto;
-    /* enable clicks on the toast itself */
     background: var(--bg-card);
     border: 1px solid var(--accent);
     color: var(--text-primary);
@@ -568,8 +707,8 @@
 }
 
 .toast.error {
-    border-left: 4px solid #ff5555;
-    border-color: #ff5555;
+    border-left: 4px solid var(--danger);
+    border-color: var(--danger);
 }
 
 .toast i {
@@ -605,26 +744,6 @@
     }
 }
 
-.btn-favorite {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    font-size: 1rem;
-    padding: 0.2rem 0.4rem;
-    transition: color 0.2s, transform 0.2s;
-}
-
-.btn-favorite:hover {
-    color: #ff4d6d;
-    transform: scale(1.2);
-}
-
-.btn-favorite .fa-solid.fa-heart {
-    color: #ff4d6d;
-}
-
-/* Floating Shortcuts Button */
 .shortcuts-fab {
     position: fixed;
     bottom: 24px;
@@ -654,7 +773,6 @@
     object-fit: contain;
 }
 
-/* Shortcuts Modal */
 .shortcuts-modal {
     position: fixed;
     top: 0;
@@ -778,7 +896,7 @@
 }
 
 .shortcut-key-wrapper kbd {
-    background: #1e1e1e;
+    background: var(--bg-card);
     padding: 0.3rem 0.8rem;
     border-radius: 6px;
     font-family: 'Fira Code', monospace;
@@ -796,7 +914,6 @@
     flex: 1;
 }
 
-/* RTL adjustments for RTL languages */
 [dir="rtl"] .shortcut-card {
     flex-direction: row-reverse;
 }

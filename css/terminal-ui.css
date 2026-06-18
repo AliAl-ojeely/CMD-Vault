@@ -1,6 +1,0 @@
-/* Simulate a terminal window
-.cmd-syntax::before {
-    content: "$ ";
-    color: #888;
-    user-select: none;
-} */

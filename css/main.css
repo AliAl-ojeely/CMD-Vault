@@ -2,9 +2,7 @@
    1. Imports (MUST BE AT THE VERY TOP)
 ========================================= */
 @import url('variables.css');
-@import url('layout.css');
-@import url('components.css');
-@import url('terminal-ui.css');
+@import url('component-layout.css');
 @import url('modals.css');
 
 /* =========================================

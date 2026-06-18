@@ -1,4 +1,3 @@
-// render/render-main.js
 import { setLanguage as uiSetLanguage, renderCategories, renderCommandList, hideModal, showView, showToast, t } from './ui.js';
 import { initSearch, filterByCategory, setupSearchListeners, setSearchLanguage, setFavorites } from './search.js';
 import { updateAllDescriptions, setLanguage as cardSetLanguage, setToggleFavoriteCallback } from './command-card.js';
@@ -8,6 +7,7 @@ let currentLang = 'ar';
 let selectedOS = null;
 let selectedDistro = null;
 let currentSettings = null;
+let currentTheme = 'dark';
 let currentCategory = 'all';
 let favorites = JSON.parse(localStorage.getItem('cmdvault-favorites')) || [];
 
@@ -64,6 +64,27 @@ document.getElementById('sidebar')?.addEventListener('click', async (e) => {
     }
 });
 
+// ── Theme toggle ──────────────────────────────────
+function applyTheme(theme) {
+    currentTheme = theme;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    const icon = document.getElementById('theme-icon');
+    if (icon) {
+        icon.className = theme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+}
+
+document.getElementById('theme-toggle-btn')?.addEventListener('click', async () => {
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    applyTheme(newTheme);
+
+    // Persist theme to settings.json
+    const settings = await loadSettings();
+    settings.theme = newTheme;
+    await saveSettings(settings);
+});
+
 // ── Back to commands from settings ──
 document.getElementById('settings-back-btn')?.addEventListener('click', () => {
     showView('commands');
@@ -105,7 +126,7 @@ async function initApp() {
         uiSetLanguage(currentLang);
         cardSetLanguage(currentLang);
         updateAllDescriptions(currentLang);
-        renderCommandList(commands, favorites);        // pass favorites
+        renderCommandList(commands, favorites);
         setupSearchListeners();
     } catch (error) {
         console.error(error);
@@ -125,10 +146,8 @@ function toggleFavorite(rawCommand) {
     } else {
         favorites.push(rawCommand);
     }
-    // Save deduplicated
     localStorage.setItem('cmdvault-favorites', JSON.stringify([...new Set(favorites)]));
 
-    // Update the heart icon on the clicked card
     const btn = document.querySelector(`.btn-favorite[data-command="${rawCommand}"]`);
     if (btn) {
         const isFav = favorites.includes(rawCommand);
@@ -138,7 +157,6 @@ function toggleFavorite(rawCommand) {
         btn.title = isFav ? t('remove_from_favorites') : t('add_to_favorites');
     }
 
-    // If we're currently viewing favorites, re-apply filter
     if (currentCategory === 'favorites') {
         setFavorites(favorites);
         const searchInput = document.getElementById('search-input');
@@ -222,7 +240,10 @@ document.getElementById('checkForUpdatesBtn')?.addEventListener('click', async (
         if (result.error) {
             showToast(`${t('update_error')}: ${result.error}`, 'error');
         } else if (result.hasUpdate) {
-            showToast(`${t('new_version_available')}: ${result.latestVersion}`, 'info');
+            showToast(`${t('new_version_available')}: ${result.latestVersion}`, 'success');
+            if (window.api.openExternal) {
+                window.api.openExternal(result.downloadUrl);
+            }
         } else {
             showToast(`${t('up_to_date')} (v${result.currentVersion})`, 'success');
         }
@@ -235,6 +256,9 @@ document.getElementById('checkForUpdatesBtn')?.addEventListener('click', async (
 window.addEventListener('load', async () => {
     const saved = await loadSettings();
     applySettings(saved);
+
+    // Apply saved theme (default dark)
+    applyTheme(saved.theme || 'dark');
 
     currentLang = saved.lang || currentLang;
     uiSetLanguage(currentLang);

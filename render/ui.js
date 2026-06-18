@@ -84,13 +84,17 @@ export function setLanguage(lang) {
         favBtn.innerHTML = `<i class="fa-solid fa-heart"></i> ${t('favorite')}`;
     }
 
-    // Settings button (fix)
+    // Settings button
     const settingsBtn = document.getElementById('open-settings-btn');
     if (settingsBtn) {
         const icon = settingsBtn.querySelector('i');
         const iconClass = icon ? icon.className : 'fa-solid fa-sliders';
         settingsBtn.innerHTML = `<i class="${iconClass}"></i> ${t('settings')}`;
     }
+
+    // Theme toggle button tooltip
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    if (themeBtn) themeBtn.title = t('switch_theme');
 
     // Collapsible group headers
     document.querySelectorAll('[data-i18n-group]').forEach(span => {
@@ -162,7 +166,6 @@ export function showInfoModal(title, contentHTML) {
         titleEl.textContent = title;
         titleEl.style.display = '';
     } else {
-        // Hide the title element for AI prompts
         titleEl.style.display = 'none';
     }
     document.getElementById('modal-message').innerHTML = contentHTML;

@@ -3,7 +3,7 @@
 # CMD Vault
 
 [![Electron](https://img.shields.io/badge/Framework-Electron-blue?logo=electron&style=for-the-badge)](https://www.electronjs.org/)
-[![Version](https://img.shields.io/badge/Version-2.1.0-red?style=for-the-badge)](https://github.com/AliAl-ojeely)
+[![Version](https://img.shields.io/badge/Version-2.2.0-red?style=for-the-badge)](https://github.com/AliAl-ojeely)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![Windows](https://img.shields.io/badge/Platform-Windows-blue?logo=windows&style=for-the-badge)](https://github.com/AliAl-ojeely)
 [![Linux](https://img.shields.io/badge/Platform-Linux-yellow?logo=linux&style=for-the-badge)](https://github.com/AliAl-ojeely)
@@ -108,9 +108,7 @@ CMD-Vault/
 ├── css/
 │   ├── main.css                 # Entry point, imports all other CSS
 │   ├── variables.css            # OLED dark theme variables
-│   ├── layout.css               # Sidebar, content, landing page layout
-│   ├── components.css           # Cards, buttons, animations
-│   ├── terminal-ui.css          # Command syntax styling
+│   ├── component-layout.css     # Cards, buttons, animations
 │   └── modals.css               # Modals and overlays
 ├── data/
 │   ├── win-commands.js          # Windows commands with bilingual descriptions

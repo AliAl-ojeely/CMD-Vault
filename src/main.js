@@ -138,6 +138,7 @@ function getSettingsPath() {
 
 const defaultSettings = {
     lang: 'ar',
+    theme: 'dark',
     windowWidth: 1200,
     windowHeight: 800,
 };

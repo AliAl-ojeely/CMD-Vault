@@ -23,6 +23,8 @@ npm-debug.log*
 *.swp
 *.swo
 
+css/terminal-ui.css
+
 # Optional: keep package-lock.json for reproducible builds
 # Remove the next line if you want to commit package-lock.json
 # package-lock.json

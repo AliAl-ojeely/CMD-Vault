@@ -927,6 +927,48 @@ const aiPrompts = [
         "category": "Sports & Fitness",
         "desc_en": "IPL match day fan – team colors, face paint, stadium floodlights, excited expression, low‑angle.",
         "desc_ar": "مشجع يوم مباراة IPL – ألوان الفريق، رسم على الوجه، أضواء الاستاد، تعبير متحمس، زاوية منخفضة."
+    },
+    {
+        "command": "Ultra-realistic product shot of a luxury wristwatch on a marble surface, soft studio lighting from the left, sharp reflections on the glass face, shallow depth of field with bokeh in the background, rich gold and silver tones, magazine advertisement quality, 4K",
+        "platform": "ai",
+        "category": "Product Photography",
+        "desc_en": "Luxury watch product shot – marble surface, soft reflections, gold/silver tones, magazine ad quality.",
+        "desc_ar": "لقطة منتج لساعة فاخرة على سطح رخامي – انعكاسات ناعمة، ألوان ذهبية/فضية، جودة إعلانات المجلات."
+    },
+    {
+        "command": "A steampunk airship flying over a foggy Victorian city at dusk, warm gaslight glow from windows, intricate brass gears visible on the hull, dramatic sky with orange and purple clouds, cinematic wide shot, highly detailed, 8K",
+        "platform": "ai",
+        "category": "Cinematic",
+        "desc_en": "Steampunk airship over Victorian city – dramatic dusk lighting, intricate details, cinematic scale.",
+        "desc_ar": "سفينة هوائية بأسلوب الخيال العلمي البخاري فوق مدينة فيكتورية – إضاءة الغسق الدرامية، تفاصيل معقدة، مقياس سينمائي."
+    },
+    {
+        "command": "A close-up macro photograph of a dewdrop on a vibrant green leaf, reflecting a miniature forest landscape inside the droplet, soft morning backlight, extreme sharpness, nature's perfection, 1:1 square format, photorealistic",
+        "platform": "ai",
+        "category": "Advanced Techniques",
+        "desc_en": "Macro dewdrop with reflected landscape – extreme close-up, morning light, 1:1 square, photorealistic.",
+        "desc_ar": "قطرة ندى ماكرو تعكس منظرًا طبيعيًا مصغرًا – لقطة قريبة جدًا، ضوء الصباح، تنسيق مربع 1:1، واقعية فائقة."
+    },
+    {
+        "command": "A CINEMATIC LOW-ANGLE PORTRAIT SHOT CAPTURED WITH A 50MM LENS, LOOKING UP AT A MALE SUBJECT FEATURING THE UPLOADED FACE AS REFERENCE, IS LEANING CASUALLY AGAINST A WEATHERED CONCRETE AND METAL RAILING WITH BOTH ELBOW RESTING. THE SUBJECT HAS SHORT DARK HAIR WITH SUN-KISSED HIGHLIGHTS AND IS WEARING AN OVERSIZED, TEXTURED BEIGE LONG-SLEEVE CREWNECK SWEATSHIRT THAT DRAPES LOOSELY. HE IS GAZING UPWARD AND TO THE RIGHT WITH A CONTEMPLATIVE EXPRESSION, BATHED IN SOFT, WARM NATURAL SUNLIGHT THAT CREATES GENTLE SHADOWS UNDER THE JAWLINE AND ACCENTUATES THE SKIN'S SUBSURFACE SCATTERING. THE COMPOSITION INCLUDES A SIGNIFICANT FOREGROUND BLUR (BOKEH) OF A STRUCTURAL ELEMENT ON THE RIGHT SIDE, ADDING DEPTH AND FRAMING THE SUBJECT. THE BACKGROUND IS A VAST, SOLID EXPANSE OF DEEP TEAL-CYAN SKY, CREATING A STRIKING TEAL AND ORANGE COLOR GRADE TYPICAL OF ANALOG FILM PHOTOGRAPHY.",
+        "platform": "ai",
+        "category": "Portraits",
+        "desc_en": "Cinematic low‑angle portrait with teal‑orange grading, bokeh, and film photography aesthetics. Perfect for dramatic outdoor portraits.",
+        "desc_ar": "صورة سينمائية بزاوية منخفضة مع تدرج لوني أزرق/برتقالي، بوكيه، وجمالية التصوير الفوتوغرافي التناظري. مثالية للصور الخارجية الدرامية."
+    },
+    {
+        "command": "CINEMATIC BLACK-AND-WHITE LOW-KEY PORTRAIT (FILM NOIR), 4:5 VERTICAL, MEDIUM CLOSE-UP, CENTERED. HEAD DOWN, LOOKING AT HANDS ADJUSTING CUFFLINK (HANDS VISIBLE, NATURAL TENSION). SINGLE OVERHEAD LIGHT - DEEP SHADOWS, EYES PARTIALLY HIDDEN. HIGHLIGHTS ON COLLAR/KNUCKLES/GLASSES, SUBTLE RIM LIGHT. DARK SUIT, WHITE SHIRT, DARK TIE, MINIMAL ACCESSORIES. PURE BLACK BACKGROUND. 85MM, F/2.8-5.6, ULTRA-SHARP, HIGH-DETAIL, NO SMOOTHING. MOODY, SERIOUS, LUXURY EDITORIAL TONE.",
+        "platform": "ai",
+        "category": "Portraits",
+        "desc_en": "Black‑and‑white film noir portrait with dramatic overhead lighting. Perfect for moody, luxury editorial photography.",
+        "desc_ar": "صورة أبيض وأسود بأسلوب الفيلم الأسود مع إضاءة علوية درامية. مثالية للتصوير التحريري الفاخر والكئيب."
+    },
+    {
+        "command": "A POWERFUL EDITORIAL, HIGHLY DETAILED, PHOTOREALISTIC, DYNAMIC LOW-ANGLE PORTRAIT FEATURES A YOUNG MAN AGAINST A VIBRANT, SOLID ORANGE-RED BACKGROUND, UTILIZING DRAMATIC, HIGH-CONTRAST STUDIO LIGHTING DOMINATED BY VIBRANT ORANGE AND DEEP RED HUES, MAINTAINING A SERIOUS, INTENSE EXPRESSION WHILE LOOKING INTO THE SPACE ABOVE. HE IS WEARING ROUND METAL GLASSES AND A DARK BLUE JACKET. DIRECTIONAL LIGHTING CASTS DEEP SHADOWS, ADDING TO THE MYSTERIOUS AND INTENSE MOOD, WHILE A STRONG DRAMATIC RIM LIGHT OR COLOR CAST HIGHLIGHTS HIS EDGES, SEPARATING HIM FROM THE INTENSELY LIT BACKGROUND. THE COMPOSITION IS A: LOW-ANGLE MEDIUM CLOSE-UP, FOCUSING ON HIS FACE AND SHOULDERS, RENDERED SHARPLY AGAINST THE SMOOTH, INTENSE COLOR GRADIENTS OF THE CINEMATIC BACKDROP. 4:5",
+        "platform": "ai",
+        "category": "Portraits",
+        "desc_en": "Intense orange‑red editorial portrait with dramatic studio lighting and sharp detail. Ideal for high‑impact fashion or concept images.",
+        "desc_ar": "صورة تحريرية مكثفة بخلفية برتقالية‑حمراء مع إضاءة استوديو درامية وتفاصيل حادة. مثالية لصور الأزياء أو التصوير المفاهيمي عالي التأثير."
     }
 ];
 

@@ -13,4 +13,25 @@
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     --font-mono: 'Courier New', 'Consolas', 'Monaco', 'Menlo', monospace;
     --font-ui: 'Poppins', 'Cairo', sans-serif;
+    --btn-bg: #2a2a2a;
+    --btn-text: #e0e0e0;
+    --btn-hover: #3a3a3a;
+}
+
+[data-theme="light"] {
+    --bg-primary: #f1f5f9;
+    --bg-secondary: #f8fafc;
+    --bg-sidebar: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-input: #f8fafc;
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    --accent: #00cc99;
+    --accent-hover: #00aa88;
+    --danger: #ff5555;
+    --btn-bg: #e2e8f0;
+    --btn-text: #1e293b;
+    --btn-hover: #cbd5e1;
 }

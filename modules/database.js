@@ -16,6 +16,7 @@ function deduplicateCommands(commands) {
 }
 
 const allCommands = deduplicateCommands([
+    ...aiPrompts,
     ...windowsCommands,
     ...linuxCommands,
     ...macCommands
