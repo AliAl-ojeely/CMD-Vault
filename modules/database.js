@@ -5,6 +5,7 @@ const aiPrompts = require('../data/ai-prompts.js');
 const gitCommands = require('../data/git-commands.js');
 const flutterCommands = require('../data/flutter-commands.js');
 const nodejsCommands = require('../data/nodejs-commands.js');
+const dockerCommands = require('../data/docker-commands.js');
 
 function deduplicateCommands(commands) {
     const seen = new Set();
@@ -23,11 +24,12 @@ const allCommands = deduplicateCommands([
     ...macCommands,
     ...gitCommands,
     ...flutterCommands,
-    ...nodejsCommands
+    ...nodejsCommands,
+    ...dockerCommands
 ]);
 
 async function loadCommands() {
-    return [...windowsCommands, ...linuxCommands, ...macCommands, ...aiPrompts, ...gitCommands, ...flutterCommands, ...nodejsCommands];
+    return [...windowsCommands, ...linuxCommands, ...macCommands, ...aiPrompts, ...gitCommands, ...flutterCommands, ...nodejsCommands, ...dockerCommands];
 }
 
 module.exports = { loadCommands };

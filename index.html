@@ -19,7 +19,7 @@
         <div class="landing-content">
             <img src="assets/icon.png" alt="CMD Vault Logo" class="landing-logo" />
             <h1 class="landing-title" data-i18n="appTitle">CMD Vault</h1>
-            <p class="landing-subtitle" data-i18n="landing_subtitle">Select your operating system, Git, Flutter, Node.js to browse its commands
+            <p class="landing-subtitle" data-i18n="landing_subtitle">Select your operating system, Git, Flutter, Node.js or Docker to browse its commands
             </p>
             <div class="os-selection">
                 <button class="os-card" data-os="windows">
@@ -49,6 +49,10 @@
                 <button class="os-card" data-os="nodejs">
                     <i class="fa-brands fa-node-js fa-4x" style="color: #5FA04E;"></i>
                     <span data-i18n="os_nodejs">Node.js</span>
+                </button>
+                <button class="os-card" data-os="docker">
+                    <i class="fa-brands fa-docker fa-4x" style="color: #2496ED;"></i>
+                    <span data-i18n="os_docker">Docker</span>
                 </button>
             </div>
         </div>
@@ -181,7 +185,7 @@
         <div id="modal-overlay" class="hidden">
             <div class="modal">
                 <h2 id="modal-title" data-i18n="warningTitle">OS Warning</h2>
-                <p id="modal-message"></p>
+                <div id="modal-message"></div>
                 <button id="modal-close" data-i18n="close">Close</button>
             </div>
         </div>
@@ -202,7 +206,7 @@
                             style="color: var(--accent); text-decoration: underline; font-weight: bold; cursor: pointer;"
                             data-i18n="github_profile">GitHub Profile</span>
                     </p>
-                    <p style="text-align: center;" data-i18n="version_label">version 2.5.0</p>
+                    <p style="text-align: center;" data-i18n="version_label">version 2.6.0</p>
                 </div>
             </div>
         </div>

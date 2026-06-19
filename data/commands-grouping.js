@@ -7,6 +7,7 @@ const macCommands = require('./mac-commands');
 const gitCommands = require('./git-commands');
 const flutterCommands = require('./flutter-commands');
 const nodejsCommands = require('./nodejs-commands');
+const dockerCommands = require('./docker-commands');
 
 const allCommands = [
     ...windowsCommands,
@@ -14,7 +15,8 @@ const allCommands = [
     ...macCommands,
     ...gitCommands,
     ...flutterCommands,
-    ...nodejsCommands
+    ...nodejsCommands,
+    ...dockerCommands
 ];
 
 const outputPath = path.join(__dirname, 'commands.json');

@@ -3,7 +3,7 @@
 # CMD Vault
 
 [![Electron](https://img.shields.io/badge/Framework-Electron-blue?logo=electron&style=for-the-badge)](https://www.electronjs.org/)
-[![Version](https://img.shields.io/badge/Version-2.5.0-red?style=for-the-badge)](https://github.com/AliAl-ojeely)
+[![Version](https://img.shields.io/badge/Version-2.6.0-red?style=for-the-badge)](https://github.com/AliAl-ojeely)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![Windows](https://img.shields.io/badge/Platform-Windows-blue?logo=windows&style=for-the-badge)](https://github.com/AliAl-ojeely)
 [![Linux](https://img.shields.io/badge/Platform-Linux-yellow?logo=linux&style=for-the-badge)](https://github.com/AliAl-ojeely)
@@ -114,6 +114,7 @@ CMD-Vault/
 │   ├── win-commands.js          # Windows commands
 │   ├── linux-commands.js        # Linux commands
 │   ├── mac-commands.js          # Mac commands
+│   ├── docker-commands.js       # Docker commands
 │   ├── ai-prompts.js            # AI Prompts
 │   ├── git-commands.js          # Git commands
 │   ├── flutter-commands.js      # Flutter commands

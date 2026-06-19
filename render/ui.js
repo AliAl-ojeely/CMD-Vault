@@ -58,6 +58,11 @@ const categoryTranslationMap = {
     "NPM Scripts": "cat_npm_scripts",
     "Cache & Config": "cat_node_cache",
     "Advanced & Debugging": "cat_node_advanced",
+    "System & Info": "cat_docker_system",
+    "Images": "cat_docker_images",
+    "Containers": "cat_docker_containers",
+    "Volumes & Networks": "cat_docker_volumes",
+    "Docker Compose": "cat_docker_compose",
 };
 
 export function t(key) {
@@ -259,6 +264,10 @@ export function renderCategories(categories, onCategorySelect) {
         {
             key: 'group_nodejs', icon: 'fa-brands fa-node-js',
             categories: ['Node.js Basics', 'NPM Packages', 'NPM Scripts', 'Cache & Config', 'Advanced & Debugging']
+        },
+        {
+            key: 'group_docker', icon: 'fa-brands fa-docker',
+            categories: ['System & Info', 'Images', 'Containers', 'Volumes & Networks', 'Docker Compose']
         }
     ];
 

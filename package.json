@@ -1,6 +1,6 @@
 {
   "name": "cmd-vault",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "Cross-platform, bilingual command reference hub for Windows, Linux, and macOS",
   "author": "Ali Al-ojeely <alialojeely@gmail.com>",
   "main": "src/main.js",
