@@ -8,43 +8,89 @@ const { checkGitHubReleases } = require('../modules/updater');
 
 process.on('uncaughtException', (error) => {
     console.error('Uncaught Exception:', error);
-    // Optionally show a message box before exiting
     app.quit();
 });
 
 let mainWindow;
 
+// Default settings moved to the top so they can be accessed by createWindow
+const defaultSettings = {
+    lang: 'ar',
+    theme: 'dark',
+    windowWidth: 1200,
+    windowHeight: 800,
+    windowX: undefined, // Store X position
+    windowY: undefined  // Store Y position
+};
+
+function getSettingsPath() {
+    return path.join(app.getPath('userData'), 'settings.json');
+}
+
 function createWindow() {
-    mainWindow = new BrowserWindow({
-        width: 1200,
-        height: 800,
+    // 1. Read existing settings BEFORE creating the window
+    const settingsPath = getSettingsPath();
+    let savedSettings = { ...defaultSettings };
+
+    try {
+        if (fs.existsSync(settingsPath)) {
+            const raw = fs.readFileSync(settingsPath, 'utf-8');
+            savedSettings = { ...defaultSettings, ...JSON.parse(raw) };
+        }
+    } catch (err) {
+        console.error('Failed to read settings on startup:', err);
+    }
+
+    // 2. Apply saved size and position
+    const windowOptions = {
+        width: savedSettings.windowWidth,
+        height: savedSettings.windowHeight,
         backgroundColor: '#0a0a0a',
         icon: path.join(__dirname, '..', 'assets', 'icon.png'),
-        autoHideMenuBar: true,          // change to false so menu bar is visible (optional)
+        autoHideMenuBar: true,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
         },
-    });
+    };
+
+    // Only apply X/Y if they exist, otherwise OS will center it by default
+    if (savedSettings.windowX !== undefined && savedSettings.windowY !== undefined) {
+        windowOptions.x = savedSettings.windowX;
+        windowOptions.y = savedSettings.windowY;
+    }
+
+    mainWindow = new BrowserWindow(windowOptions);
     mainWindow.loadFile(path.join(__dirname, '..', 'index.html'));
 
-    // Auto‑save window size on every resize
-    mainWindow.on('resize', () => {
-        const [width, height] = mainWindow.getSize();
-        const settingsPath = getSettingsPath();
+    // 3. Helper function to save bounds (size + position)
+    const saveBounds = () => {
+        if (!mainWindow) return;
+        const bounds = mainWindow.getBounds(); // Gets x, y, width, height
         try {
             let current = {};
             if (fs.existsSync(settingsPath)) {
                 const raw = fs.readFileSync(settingsPath, 'utf-8');
                 current = JSON.parse(raw);
             }
-            const updated = { ...defaultSettings, ...current, windowWidth: width, windowHeight: height };
+            const updated = {
+                ...defaultSettings,
+                ...current,
+                windowWidth: bounds.width,
+                windowHeight: bounds.height,
+                windowX: bounds.x,
+                windowY: bounds.y
+            };
             fs.writeFileSync(settingsPath, JSON.stringify(updated, null, 2));
         } catch (err) {
             // ignore
         }
-    });
+    };
+
+    // Listen to both resize and move events
+    mainWindow.on('resized', saveBounds);
+    mainWindow.on('moved', saveBounds);
 }
 
 // ─── Application Menu (includes reload shortcuts) ──────────
@@ -53,10 +99,10 @@ function createApplicationMenu() {
         {
             label: 'View',
             submenu: [
-                { role: 'reload' },          // Ctrl+R (or Cmd+R on macOS)
-                { role: 'forceReload' },     // Ctrl+Shift+R (or Cmd+Shift+R)
+                { role: 'reload' },
+                { role: 'forceReload' },
                 { type: 'separator' },
-                { role: 'toggleDevTools' },  // F12 / Ctrl+Shift+I
+                { role: 'toggleDevTools' },
                 { type: 'separator' },
                 { role: 'resetZoom' },
                 { role: 'zoomIn' },
@@ -65,7 +111,6 @@ function createApplicationMenu() {
                 { role: 'togglefullscreen' }
             ]
         },
-        // Optional: add an Edit menu for copy/paste (useful in forms)
         {
             label: 'Edit',
             submenu: [
@@ -91,9 +136,8 @@ process.on('uncaughtException', (error) => {
 
 app.whenReady().then(() => {
     createWindow();
-    createApplicationMenu();    // ← replaces Menu.setApplicationMenu(null)
+    createApplicationMenu();
 
-    // Keep your existing DevTools global shortcuts
     globalShortcut.register('F12', () => {
         if (mainWindow) mainWindow.webContents.toggleDevTools();
     });
@@ -102,15 +146,14 @@ app.whenReady().then(() => {
     });
 });
 
-// (The rest of your IPC handlers remain unchanged)
 ipcMain.on('resize-window', (event, width, height) => {
     if (mainWindow) mainWindow.setSize(width, height);
 });
 
 ipcMain.handle('get-window-size', () => {
     if (mainWindow) {
-        const [width, height] = mainWindow.getSize();
-        return { width, height };
+        const bounds = mainWindow.getBounds();
+        return { width: bounds.width, height: bounds.height };
     }
     return { width: 1200, height: 800 };
 });
@@ -131,17 +174,6 @@ ipcMain.handle('get-commands', async () => {
         return [];
     }
 });
-
-function getSettingsPath() {
-    return path.join(app.getPath('userData'), 'settings.json');
-}
-
-const defaultSettings = {
-    lang: 'ar',
-    theme: 'dark',
-    windowWidth: 1200,
-    windowHeight: 800,
-};
 
 ipcMain.handle('load-settings', async () => {
     const filePath = getSettingsPath();
