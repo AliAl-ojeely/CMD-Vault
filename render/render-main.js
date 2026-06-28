@@ -205,6 +205,11 @@ async function loadSettingsIntoForm() {
     const s = await loadSettings();
     document.getElementById('langSetting').value = s.lang;
 
+    const trayToggle = document.getElementById('trayToggleInput');
+    if (trayToggle) {
+        trayToggle.checked = s.minimizeToTray != false;
+    }
+
     if (window.api && window.api.getWindowSize) {
         const size = await window.api.getWindowSize();
         document.getElementById('windowWidthInput').value = size.width;
@@ -220,6 +225,8 @@ document.getElementById('saveGeneralSettings')?.addEventListener('click', async 
         lang: document.getElementById('langSetting').value,
         windowWidth: parseInt(document.getElementById('windowWidthInput').value, 10) || 1200,
         windowHeight: parseInt(document.getElementById('windowHeightInput').value, 10) || 800,
+
+        minimizeToTray: document.getElementById('trayToggleInput')?.checked ?? true
     };
 
     await saveSettings(settings);

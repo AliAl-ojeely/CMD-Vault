@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu, globalShortcut } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, globalShortcut, Tray } = require('electron');
 const path = require('path');
 const { shell } = require('electron');
 const fs = require('fs-extra');
@@ -12,16 +12,22 @@ process.on('uncaughtException', (error) => {
 });
 
 let mainWindow;
+let tray = null;
+let isQuitting = false;
 
-// Default settings moved to the top so they can be accessed by createWindow
+// Default settings
 const defaultSettings = {
     lang: 'ar',
     theme: 'dark',
     windowWidth: 1200,
     windowHeight: 800,
-    windowX: undefined, // Store X position
-    windowY: undefined  // Store Y position
+    windowX: undefined,
+    windowY: undefined,
+    minimizeToTray: true,
 };
+
+// GLOBAL VARIABLE TO TRACK SETTINGS (This fixes the ReferenceError)
+let currentSettings = { ...defaultSettings };
 
 function getSettingsPath() {
     return path.join(app.getPath('userData'), 'settings.json');
@@ -30,12 +36,11 @@ function getSettingsPath() {
 function createWindow() {
     // 1. Read existing settings BEFORE creating the window
     const settingsPath = getSettingsPath();
-    let savedSettings = { ...defaultSettings };
 
     try {
         if (fs.existsSync(settingsPath)) {
             const raw = fs.readFileSync(settingsPath, 'utf-8');
-            savedSettings = { ...defaultSettings, ...JSON.parse(raw) };
+            currentSettings = { ...defaultSettings, ...JSON.parse(raw) };
         }
     } catch (err) {
         console.error('Failed to read settings on startup:', err);
@@ -43,8 +48,8 @@ function createWindow() {
 
     // 2. Apply saved size and position
     const windowOptions = {
-        width: savedSettings.windowWidth,
-        height: savedSettings.windowHeight,
+        width: currentSettings.windowWidth,
+        height: currentSettings.windowHeight,
         backgroundColor: '#0a0a0a',
         icon: path.join(__dirname, '..', 'assets', 'icon.png'),
         autoHideMenuBar: true,
@@ -56,9 +61,9 @@ function createWindow() {
     };
 
     // Only apply X/Y if they exist, otherwise OS will center it by default
-    if (savedSettings.windowX !== undefined && savedSettings.windowY !== undefined) {
-        windowOptions.x = savedSettings.windowX;
-        windowOptions.y = savedSettings.windowY;
+    if (currentSettings.windowX !== undefined && currentSettings.windowY !== undefined) {
+        windowOptions.x = currentSettings.windowX;
+        windowOptions.y = currentSettings.windowY;
     }
 
     mainWindow = new BrowserWindow(windowOptions);
@@ -83,14 +88,71 @@ function createWindow() {
                 windowY: bounds.y
             };
             fs.writeFileSync(settingsPath, JSON.stringify(updated, null, 2));
+            currentSettings = updated; // Keep runtime sync'd
         } catch (err) {
             // ignore
         }
     };
 
+    mainWindow.on('close', (event) => {
+        if (currentSettings.minimizeToTray && !isQuitting) {
+            event.preventDefault();
+            mainWindow.hide();
+        }
+    });
+
     // Listen to both resize and move events
     mainWindow.on('resized', saveBounds);
     mainWindow.on('moved', saveBounds);
+}
+
+// ─── System Tray Function ────────── 
+
+function createTray() {
+    if (tray) return; // Prevent creating duplicate trays
+    const iconPath = path.join(__dirname, '..', 'assets', 'icon.png');
+
+    tray = new Tray(iconPath);
+
+    const contextMenu = Menu.buildFromTemplate([
+        {
+            label: 'Show CMD Vault',
+            click: () => mainWindow.show()
+        },
+        {
+            label: 'Hide',
+            click: () => mainWindow.hide()
+        },
+        { type: 'separator' },
+        {
+            label: 'Quit',
+            click: () => {
+                isQuitting = true;
+                app.quit();
+            }
+        }
+    ]);
+
+    tray.setToolTip('CMD Vault');
+    tray.setContextMenu(contextMenu);
+
+    // Toggle window visibility when left-clicking the tray icon
+    tray.on('click', () => {
+        if (mainWindow.isVisible()) {
+            mainWindow.hide();
+        }
+        else {
+            mainWindow.show();
+            mainWindow.focus();
+        }
+    });
+}
+
+function destroyTray() {
+    if (tray) {
+        tray.destroy();
+        tray = null;
+    }
 }
 
 // ─── Application Menu (includes reload shortcuts) ──────────
@@ -138,6 +200,11 @@ app.whenReady().then(() => {
     createWindow();
     createApplicationMenu();
 
+    // FIXED: Only call createTray once conditional on settings
+    if (currentSettings.minimizeToTray) {
+        createTray();
+    }
+
     globalShortcut.register('F12', () => {
         if (mainWindow) mainWindow.webContents.toggleDevTools();
     });
@@ -180,20 +247,31 @@ ipcMain.handle('load-settings', async () => {
     try {
         if (await fs.pathExists(filePath)) {
             const raw = await fs.readFile(filePath, 'utf-8');
-            return { ...defaultSettings, ...JSON.parse(raw) };
+            currentSettings = { ...defaultSettings, ...JSON.parse(raw) };
+            return currentSettings;
         }
     } catch (err) {
         console.error('Failed to load settings:', err);
     }
     await fs.writeFile(filePath, JSON.stringify(defaultSettings, null, 2));
-    return { ...defaultSettings };
+    currentSettings = { ...defaultSettings };
+    return currentSettings;
 });
 
 ipcMain.handle('save-settings', async (event, newSettings) => {
     const filePath = getSettingsPath();
-    const merged = { ...defaultSettings, ...newSettings };
+    const merged = { ...defaultSettings, ...currentSettings, ...newSettings };
     try {
         await fs.writeFile(filePath, JSON.stringify(merged, null, 2));
+
+        if (merged.minimizeToTray && !tray) {
+            createTray();
+        } else if (!merged.minimizeToTray && tray) {
+            destroyTray();
+        }
+
+        currentSettings = merged;
+
         return { success: true };
     } catch (err) {
         console.error('Failed to save settings:', err);
